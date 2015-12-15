@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Standard Meta -->
+  <meta charset="utf-8" />
+  <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">-->
+
+  <!-- Site Properities -->
+  <title>clubActivityEdit</title>
+
+  <!--<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">-->
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="../dist/semantic.css" />
+  <script src="../dist/semantic.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="clubActivityEdit.css" />
+    <!--head for Ueditor-->
+    <script type="text/javascript" charset="utf-8" src="ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="ueditor.all.min.js"> </script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" src="lang/zh-cn/zh-cn.js"></script>
+    <script type="text/javascript">
+  var xmlhttp;
+  function Save(){
+     if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+         xmlhttp=new XMLHttpRequest();
+         }
+       else
+       {// code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function()
+    {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+        //var data = xmlhttp.response;
+        //var dataObj =eval("("+data+")");
+        //alert(xmlhttp.responseText);
+        window.location.href = "new_clubDefault.html";
+    }
+  }
+ 		 var article_id = sessionStorage["click_id"];
+        //xmlhttp.open("POST","http://www.buaaclubs.com/api/users/"+"${sessionStorage.uid}"+"/articles/notes/create",true);
+        xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/articles/detail/"+article_id.toString()+"/update",true);
+        xmlhttp.setRequestHeader("Content-Type"," ");
+        xmlhttp.setRequestHeader("uid",sessionStorage.uid);
+		xmlhttp.setRequestHeader("token",sessionStorage.token);
+        var row = {title:document.getElementById("btitle").innerHTML,abstract:UE.getEditor('editor').getContentTxt().substring(0,350)+"...",content:UE.getEditor('editor').getContent()};
+        var jsonObj = JSON.stringify(row);
+        xmlhttp.send(jsonObj);
+  }
+    function clubDefault(){
+  	window.location.href = "new_clubDefault.html";
+  }
+
+  function ActivityCreate(){
+  	window.location.href = "new_clubActivityCreate.html";
+  }
+  function search()
+  {
+  	alert("该功能还在开发中");
+  }
+
+  function replacePicAndName(){
+  	var oldPic = document.getElementById('middle').getElementsByTagName('img')[0];
+  	var Pic = document.createElement('img');
+  	Pic.setAttribute('src',sessionStorage.pic_head);
+  	oldPic.parentNode.replaceChild(Pic,oldPic);
+  	var oldName = document.getElementById('logContainer').getElementsByTagName('a')[0];
+  	oldName.innerHTML = sessionStorage.name;
+  }
+  	function check(){
+  		if(sessionStorage.clubsigned==undefined)
+  			window.location.href = "clubSignIn.html";
+  	}
+
+  </script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3666c9cf75dbb1c2a355491d82b6fe81";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+<body>
+<script type="text/javascript">check();</script>
+	<div>
+		<div id="gy_masthead">
+				<!-- <div class="ui fluid catagory search" style="margin-top: 8px; margin-right: 155px; float:right;">
+					<div class="ui icon input" style="width: 260px;">
+						<input class="prompt" type="text" placeholder="Please input~~~" />
+						<i class="search icon"></i>
+					</div>
+					<div class="results"></div>
+				</div> -->
+				<!-- <div id="logo"><img src="images/lingfeng.jpg" height="44px" width="44px"/></div> -->
+				<p id="name" style = "margin-top:10px;">BuaaClubs</p>
+				<div class="ui action left icon input" style="margin-top: 8px; margin-left: 850px;">
+					<i class="search icon"></i>
+					<input type="text" placeholder="Search~~~" />
+					<div class="ui inverted yellow button" onclick = "search()">Search</div>
+				</div>
+		</div>
+
+		<div id="middle">
+			<div class="blank"></div>
+			<div id="container">
+
+				<div id="logContainer">
+					<div class="cardContainer">
+						<div class="ui yellow card">
+							<div class="image" style="padding 10px;">
+								<img src="images/lingfeng.jpg">
+							</div>
+							<div class="content">
+								<a class="header"> 凌 峰 社 </a>
+								<div class="meta">
+									<span class="date">2005年成立</span>
+								</div>
+							</div>
+							<div class="extra content">
+								<a><i class="sun icon"></i> 实践类社团 </a>
+							</div>
+							<div class="extra content">
+								<a><i class="user icon"></i> 50 members </a>
+							</div>
+						</div>
+					</div>
+
+					<div class="buttonContainer" style="margin-top: 15px;">
+						<!-- <div class="ui animated teal button" tabindex="0" style="width: 100%;"  onclick="ActivityCreate()">
+							<div class="visible content"> 创 建 新 的 活 动 </div>
+							<div class="hidden content">
+								<i class="add circle icon"></i>
+							</div>
+						</div>
+
+						<div class="ui animated teal button" tabindex="0" style="width: 100%;" onclick="clubDefault()">
+							<div class="visible content"> 查 看 所 有 活 动 </div>
+							<div class="hidden content" >
+								<i class="paw icon"></i>
+							</div>
+						</div> -->
+						<div class="buttonContainer">
+							<div class="ui vertical labeled icon buttons" style="width: 100%;">
+								<div class="ui teal labeled icon button" onclick="clubDefault()">后 台 首 页
+								 	<i class="paw icon"></i>
+								</div>
+								<div class="ui teal labeled icon button" onclick="ActivityCreate()">创 建 活 动
+									<i class="add circle icon"></i>
+								</div>
+								
+								<div class="ui teal labeled icon button" onclick="clubDefault()" style="background-color:#009d95;"> 编 辑 活 动 
+								 	<i class="edit icon"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- <div id="logblockleft"></div> -->
+
+				<!-- <div id="classifications">
+					<div class="large ui animated yellow button" tabindex="0" style="margin-top: 20px; margin-left: auto; margin-right: auto; float: right;" >
+							<div class="visible content"> 创 建 新 的 活 动 </div>
+							<div class="hidden content" onclick="ActivityCreate()">
+								<i class="add circle icon"></i>
+							</div>
+						</div>
+
+						<div class="large ui animated teal button" tabindex="0" style="margin-top: 15px; margin-left: auto; margin-right: auto; float: right;" >
+							<div class="visible content"> 查 看 所 有 活 动 </div>
+							<div class="hidden content" onclick="clubDefault()">
+								<i class="paw icon"></i>
+							</div>
+						</div>
+					</div>
+				</div>	 -->
+
+				<!-- <div id="logblockleft"></div> -->
+
+				<div id="news">
+					<div class="newsContainer">
+					<!--start of ueditor-->
+						<div>
+		    				<h1>编辑</h1>
+		    				<p id = "atitle">标题</p>
+		    				<p id = "btitle">标题</p>
+		    		
+
+		   					<script id="editor" type="text/plain" style="width:100%;">
+		    				</script>
+		    				<script type = "text/javascript">
+								var article_id = sessionStorage["click_id"];
+							  	if (window.XMLHttpRequest)
+								{// code for IE7+, Firefox, Chrome, Opera, Safari
+									det_http = new XMLHttpRequest();
+								}
+								else
+								{// code for IE6, IE5
+									det_http = new ActiveXObject("Microsoft.XMLHTTP");
+								}
+								det_http.open("POST","http://www.buaaclubs.com/api/clubs/articles/detail/" + article_id.toString() +"/change",true);
+
+								det_http.setRequestHeader("token",sessionStorage.token);
+        						det_http.setRequestHeader("uid",sessionStorage.uid);
+								det_http.send();
+								det_http.onreadystatechange = function()
+								{
+									if (det_http.readyState == 4)
+										if (det_http.status == 200)
+										{
+											var data = det_http.response;
+											var dataObj = eval("(" + data + ")");
+											document.getElementById("btitle").innerHTML = dataObj.article_title;
+											sessionStorage.allContent = dataObj.content;
+										}
+										else
+										{
+											alert("error");
+										}
+								}
+							</script>
+						
+
+		   				<button onclick="Save()">编辑并发布</button>
+						</div>
+						 <!-- <div id="btns">
+						  <div>
+						      <button onclick="getAllHtml()">获得整个html的内容</button>
+						       <button onclick="getContent()">获得内容</button>
+						        <button onclick="setContent()">写入内容</button>
+						        <button onclick="setContent(true)">追加内容</button>
+						        <button onclick="getContentTxt()">获得纯文本</button>
+						        <button onclick="getPlainTxt()">获得带格式的纯文本</button>
+						        <button onclick="hasContent()">判断是否有内容</button>
+						        <button onclick="setFocus()">使编辑器获得焦点</button>
+						        <button onmousedown="isFocus(event)">编辑器是否获得焦点</button>
+						        <button onmousedown="setblur(event)" >编辑器失去焦点</button>
+
+						    </div>
+						    <div>
+						        <button onclick="getText()">获得当前选中的文本</button>
+						        <button onclick="insertHtml()">插入给定的内容</button>
+						        <button id="enable" onclick="setEnabled()">可以编辑</button>
+						        <button onclick="setDisabled()">不可编辑</button>
+						        <button onclick=" UE.getEditor('editor').setHide()">隐藏编辑器</button>
+						        <button onclick=" UE.getEditor('editor').setShow()">显示编辑器</button>
+						        <button onclick=" UE.getEditor('editor').setHeight(300)">设置高度为300默认关闭了自动长高</button>
+						    </div>
+
+						    <div>
+						        <button onclick="getLocalData()" >获取草稿箱内容</button>
+						        <button onclick="clearLocalData()" >清空草稿箱</button>
+						    </div>
+
+						
+						<div>
+						    <button onclick="createEditor()">
+						    创建编辑器</button>
+						    <button onclick="deleteEditor()">
+						    删除编辑器</button>
+						</div>
+						</div>-->
+						<script type="text/javascript">
+
+						    //实例化编辑器
+						    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+						    var ue = UE.getEditor('editor');
+						    
+						    UE.getEditor('editor').addListener('ready',function(){setContent();});
+						    UE.getEditor('editor',{initialFrameHeight :900});
+
+						    function isFocus(e){
+						        alert(UE.getEditor('editor').isFocus());
+						        UE.dom.domUtils.preventDefault(e)
+						    }
+						    function setblur(e){
+						        UE.getEditor('editor').blur();
+						        UE.dom.domUtils.preventDefault(e)
+						    }
+						    function insertHtml() {
+						        var value = prompt('插入html代码', '');
+						        UE.getEditor('editor').execCommand('insertHtml', value)
+						    }
+						    function createEditor() {
+						        enableBtn();
+						        UE.getEditor('editor');
+						    }
+						    function getAllHtml() {
+						        alert(UE.getEditor('editor').getAllHtml())
+						    }
+						    function getContent() {
+						        var arr = [];
+						        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+						        arr.push("内容为：");
+						        arr.push(UE.getEditor('editor').getContent());
+						        alert(arr.join("\n"));
+						    }
+						    function getPlainTxt() {
+						        var arr = [];
+						        arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
+						        arr.push("内容为：");
+						        arr.push(UE.getEditor('editor').getPlainTxt());
+						        alert(arr.join('\n'))
+						    }
+						    function setContent(isAppendTo) {
+						        var arr = [];
+						        arr.push("使用editor.setContent()方法可以设置编辑器的内容");
+						        //alert(1);
+						        UE.getEditor('editor').setContent(sessionStorage.allContent, isAppendTo);
+						        
+						    }
+						    function setDisabled() {
+						        UE.getEditor('editor').setDisabled('fullscreen');
+						        disableBtn("enable");
+						    }
+
+						    function setEnabled() {
+						        UE.getEditor('editor').setEnabled();
+						        enableBtn();
+						    }
+
+						    function getText() {
+						        //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
+						        var range = UE.getEditor('editor').selection.getRange();
+						        range.select();
+						        var txt = UE.getEditor('editor').selection.getText();
+						        alert(txt)
+						    }
+
+						    function getContentTxt() {
+						        var arr = [];
+						        arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
+						        arr.push("编辑器的纯文本内容为：");
+						        arr.push(UE.getEditor('editor').getContentTxt());
+						        alert(arr.join("\n"));
+						    }
+						    function hasContent() {
+						        var arr = [];
+						        arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
+						        arr.push("判断结果为：");
+						        arr.push(UE.getEditor('editor').hasContents());
+						        alert(arr.join("\n"));
+						    }
+						    function setFocus() {
+						        UE.getEditor('editor').focus();
+						    }
+						    function deleteEditor() {
+						        disableBtn();
+						        UE.getEditor('editor').destroy();
+						    }
+						    function disableBtn(str) {
+						        var div = document.getElementById('btns');
+						        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+						        for (var i = 0, btn; btn = btns[i++];) {
+						            if (btn.id == str) {
+						                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+						            } else {
+						                btn.setAttribute("disabled", "true");
+						            }
+						        }
+						    }
+						    function enableBtn() {
+						        var div = document.getElementById('btns');
+						        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+						        for (var i = 0, btn; btn = btns[i++];) {
+						            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+						        }
+						    }
+
+						    function getLocalData () {
+						        alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
+						    }
+
+						    function clearLocalData () {
+						        UE.getEditor('editor').execCommand( "clearlocaldata" );
+						        alert("已清空草稿箱")
+						    }
+						</script>
+						</div>
+						<!--end of ueditor-->
+
+						
+						
+					</div>
+				</div>
+
+			</div>
+
+			<div id="foot">
+				<div class="footFont" style="margin-left:250px; margin-top:10px;">
+					<div style="margin-top:10px; display:inline-block;"> 
+						<p style="color: white; font-size: 1.3em;">About us</p> 
+						<p><i class="qq icon"></i>QQ: 576156848</p>
+						<p><i class="mail icon"></i>Email: buaaclubs@163.com</p>
+					</div>
+					<div style="margin-top:10px; margin-left: 200px; display:inline-block;"> 
+						<p style="color: white; font-size: 1.3em;">Friendly Link</p> 
+						<p>XueBa<a href="http://115.28.39.28/"> http://115.28.39.28/</a></p>
+						<p>Phylab<a href="http://121.42.204.94/"> http://121.42.204.94/</a></p>
+					</div>
+
+					<div style="margin-top:10px; margin-left: 250px; display:inline-block;"> 
+						<p style="color: #e0e0e0; font-size: 2.7em; font-family: cursive;">BuaaClubs</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	<script type="text/javascript">replacePicAndName();</script>
+
+
+
+</body>
+
+</html>
