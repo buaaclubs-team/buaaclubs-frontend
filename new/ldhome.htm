@@ -1,0 +1,320 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>干部领导查询-组工平台</title>
+
+<link href="/modules/commons/themes/default.css" rel="stylesheet" type="text/css"/>
+<link href="/modules/commons/themes/alphacube.css" rel="stylesheet" type="text/css"/>
+<link href="/modules/lingdaochaxun/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/modules/portal/css/css.css" rel="stylesheet" type="text/css" />
+<link href="/modules/portal/images/dhome/icommon.css" rel="stylesheet" type="text/css" />
+<link href="/modules/portal/images/dhome/changeC.css" rel="stylesheet" type="text/css" />
+<link href="/css/zgcp_common.css" rel="stylesheet" type="text/css" />
+<link href="/modules/lingdaochaxun/css/prettify.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src='/js/prototype.js'></script>
+<script language="javascript" src="/modules/commons/js/AjaxCommon.js"></script>
+<script type="text/javascript" src="/modules/commons/js/window/window.js"> </script>
+<script type="text/javascript" src="/modules/commons/js/window/window_ext.js"> </script>
+<script language="javascript" src="/modules/Commons/js/autocomplete_extras.js" type="text/javascript"></script>
+<script language="javascript" src="/modules/Commons/js/codetableapi.js" type="text/javascript"></script>
+<script language="javascript" src="/FusionCharts/js/FusionCharts.js"></script>
+<script language="javascript" src="/FusionCharts/js/FusionChartsExportComponent.js"></script>
+<script type="text/javascript" language="javascript" src="/modules/Analysis/js/ChartGripsMain.js"></script>
+<link href="/modules/lingdaochaxun/css/style.css" rel="stylesheet" type="text/css" />
+<style rel="stylesheet" type="text/css"><!--此处为综合查询样式，由于其使用了ajax方式，因此在其页面设置样式无效，故放到主页面-->
+body {
+	margin: 0px;
+	padding: 0px;
+	background-image: url(/modules/lingdaochaxun/images/df_02.jpg);
+	background-repeat: repeat-x;
+	background-position: 0px 82px;
+}
+.top {
+	height: 82px;
+	width: 100%;
+	background-image: url(/modules/lingdaochaxun/images/e_02.jpg);
+	background-repeat: repeat-x;
+	position: relative;
+	min-width:1003px;
+}
+.top .top_le {
+	background-image: url(/modules/lingdaochaxun/images/tz.jpg);
+	background-repeat: no-repeat;
+	height: 82px;
+}
+.top .top_ri {
+	background-image: url(/modules/lingdaochaxun/images/tt_02.jpg);
+	position: absolute;
+	height: 33px;
+	width: 511px;
+	top: 0px;
+	right: 4px;
+}
+
+.main {
+	width: 100%;
+	height: 170px;
+	float: left;
+	background-image: url(/modules/lingdaochaxun/images/rt_02.jpg);
+	background-repeat: repeat-x;
+}
+.main .nei {
+	background-image: url(/modules/lingdaochaxun/images/t_03.jpg);
+	background-repeat: repeat-x;
+	height: 55px;
+	background-position: 0px 53px;
+	margin-right: 26px;
+	margin-left: 26px;
+	margin-top: 4px;
+}
+.main .nei .neid {
+	background-image: url(/modules/lingdaochaxun/images/u_03.jpg);
+	height: 55px;
+	width: 188px;
+	background-repeat: no-repeat;
+	background-position: left bottom;
+}
+.main .miaoshu {
+	margin-right: 33px;
+	margin-left: 33px;
+	height: 100px;
+	margin-top: 16px;
+	padding-right: 4px;
+	font-family: "微软雅黑";
+	font-size: 14px;
+	color: #545C78;
+	line-height: 24px;
+}
+.miaoshu strong {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 20px;
+	color: #435689;
+	padding-right: 2px;
+	padding-left: 3px;
+}
+.main .miaoshu .cheng {
+	font-size: 1px;
+	line-height: 1px;
+	height: 96px;
+	width: 93px;
+	float: left;
+	background-image: url(/modules/lingdaochaxun/images/hy_03.jpg);
+	background-repeat: no-repeat;
+}
+.main .miaoshu .ched {
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	padding-top: 11px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+	padding-left: 0px;
+}
+.biaoge {
+	width: 100%;
+	margin-top: 15px;
+	float: left;
+	margin-bottom: 30px;
+}
+.biaoge .dgj {
+	width: 40%;
+	margin-left: 6%;
+	float: left;
+	border: 1px solid #C9C9C9;
+	height: 362px;
+	margin-bottom: 33px;
+	_margin-left:4%;
+	
+}
+.biaoge .dgj .gg {
+	text-align: center;
+	font-family: "宋体";
+	font-size: 16px;
+	line-height: 30px;
+	font-weight: bold;
+	color: #6D6D6D;
+	height: 30px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #D7D7D7;
+	background-color: #F7F7F7;
+}
+.biaoge .dgj .hj {
+	height: 100%;
+	width: 100%;
+}
+select {
+	font-family: "微软雅黑";
+	float: right;
+	height: 30px;
+	border: 0px;
+	text-align: right;
+}
+.rez {
+	position: relative;
+	z-index: 9999;
+}
+</style>
+<!--组合查询使用-->
+<script type="text/javascript" src="/modules/gbxxgl/js/SendSelectParam.js"> </script> 
+</head>
+<body>
+<!-- <input type="hidden" id="hidclickimg" />
+$session.Add("TopSystemid",'1020')
+$session.Add("SYSTEM_ID",'1020')
+#set($header= $vh.Execute($ctx,'/Homeheader.do'))
+##$header
+<div id="north">
+    #set($ac = $ActionForward)
+    #set($header= $vh.Execute($ctx,'/header.do'))
+    #set($ActionForward = $ac)
+    $header
+</div>
+$vh.Include($ctx, "/modules/LingDaoChaXun/view/ldhomedata.htm")
+<div class="main">
+<div class="nei"><div class="neid"></div></div>
+<div class="miaoshu"><div class="cheng"></div> <div class="ched">当前干部信息库采集了307名现职处级干部信息:包括正处级干部109名，副处级干部198名；男干部232名，女干部75名；党外干部27名，少数民族干部11名；研究生学历干部288名，其中博士学位干部181名；高级职称干部223名，其中正高级职称干部124名。</div></div>
+</div> -->
+
+<div class="biaoge">
+<div class="dgj">
+  <div class="gg">
+  		总体情况
+  		
+  </div>
+        <div class="hj" style=" border:0px solid red;">  
+            <!--<iframe id="nianlinggoucheng" src="" width="100%" height="90%" scrolling="no" frameborder="0">
+            </iframe> -->
+		<img id="pic1" src="./images/zt.png" width="100%" height="90%"/>
+                 
+        </div>
+  </div>
+  
+  
+  
+  
+  
+    <div class="dgj">
+  <div class="gg">年龄结构
+  		<!--
+		  <select class="rez" onchange="document.getElementById('pic3').src=options[selectedIndex].value">
+		  <option value ="./images/年龄.png" selected="selected">整体</option>
+		  <option value ="./images/年龄.png">正处</option>
+		  <option value="opel">副处</option>
+		  <option value="audi">机关</option>
+		  <option value="audi">学院</option>
+		</select>-->
+  </div>
+        <div class="hj">  
+              
+<img  id="pic3" src="./images/nl.png" width="100%" height="90%" />    
+        </div>  
+  </div>
+  
+    <div class="dgj">
+  <div class="gg">学历结构
+  		<select class="rez" onchange="document.getElementById('pic4').src=options[selectedIndex].value">
+		  <option value ="./images/xl1.png" selected="selected">整体</option>
+		  <option value ="./images/xl2.png">正处</option>
+		  <option value="./images/xl3.png">副处</option>
+		  <option value="./images/xl4.png">机关</option>
+		  <option value="./images/xl5.png">学院</option>
+		</select>
+		</div>
+        <div class="hj">  
+                 
+	<img id="pic4"  src="./images/xl1.png" width="100%" height="90%"/> 
+        </div>
+  </div>
+
+
+<div class="dgj">
+  <div class="gg">职称结构
+  		<select class="rez" onchange="document.getElementById('pic5').src=options[selectedIndex].value">
+		  <option value ="./images/zc1.png" selected="selected">整体</option>
+		  <option value ="./images/zc2.png">正处</option>
+		  <option value ="./images/zc3.png">副处</option>
+		  <option value ="./images/zc4.png">机关</option>
+		  <option value ="./images/zc5.png">学院</option>
+		</select>
+  </div>
+        <div class="hj">  
+              
+<img id="pic5"  src="./images/zc1.png" width="100%" height="90%"/>    
+        </div>  
+  </div>
+  
+    <div class="dgj">
+  <div class="gg">学缘结构
+  <!--
+		  <select class="rez" onchange="document.getElementById('pic6').src=this.options[selectedIndex].value">
+		  <option value ="./images/改版-10.png" selected="selected">整体</option>
+		  <option value ="./images/5.png">正处</option>
+		  <option value="./images/zc2.png">副处</option>
+		  <option value="audi">机关</option>
+		  <option value="audi">学院</option>
+		</select>
+-->
+  </div>
+        <div class="hj">  
+                 
+	<img id="pic6" src="./images/xy.png" width="100%" height="90%"/> 
+        </div>
+  </div>
+
+<div class="dgj">
+  <div class="gg">性别结构
+  		
+  </div>
+        <div class="hj">  
+              
+		<img id="pic2" src="./images/xb.png" width="100%" height="90%"/>    
+        </div>
+  </div>
+
+
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    //引入图表类
+    $vh.Include($ctx, "/modules/portal/js/GetChart.js")
+    //实例化图标类
+    var Chart = new GetChart();
+    Chart.Init = function () {
+        this.font = 12;
+        this.widthOverride = 0.4;
+        //高度宽度自适应
+        this.tableWidth = Browser.ViewPort.width() * this.widthOverride;
+        this.tableHeight = 330;
+
+        //得到人员权限
+        this.personRight = GetPersonRight();
+        //开始绘制图表
+       // ChartOutPutGraph('nianlinggoucheng_bgwhite', 'Doughnut2D', 'nianlinggoucheng', this.tableWidth, this.tableHeight, this.font, this.personRight);
+      //  ChartOutPutGraph('nvganbufenxi_bgwhite', 'Pie3D', 'nvganbufenxi', this.tableWidth, this.tableHeight, this.font, this.personRight);
+        //ChartOutPutGraph('xueligoucheng_bgwhite', 'Column3D', 'xueligoucheng', this.tableWidth, this.tableHeight, this.font, this.personRight);
+       // ChartOutPutGraph('xueweigoucheng_bgwhite', 'Bar2D', 'xueweigoucheng', this.tableWidth, this.tableHeight, this.font, this.personRight);
+    }
+    //初始化
+    Chart.Init();
+
+    //var oldTime = 0;
+    //var newTime = 0;
+    function adjust() {
+        //var myDate = new Date();
+        //newTime = myDate.getTime();
+        Chart.Init();
+    }
+
+    /*function reSize() { 
+        
+    }*/
+
+    window.onresize = adjust;
+
+    //setTimeout(reSize,"1000")
+
+</script>
