@@ -60,11 +60,14 @@
 	function sendMes()
 	{
 		$("#sendMesTable").modal('show');
-	  	// alert("该功能还在开发中");
 	}
 	function sendEma()
 	{
 		$("#sendEmailTable").modal('show');
+	}
+	function sendLet()
+	{
+		$("#sendLetterTable").modal('show');
 	}
 	function cancelMes(){
 		$("#sendMesTable").modal('hide');
@@ -202,13 +205,37 @@ var _hmt = _hmt || [];
 	<div class="small ui modal" id="sendEmailTable">
 		<i class="close icon"></i>
 		<div class="header">
-			通 知
+			Email
 		</div>
 		<div class="content">
 			<div class="ui right labeled left icon input">
   				<i class="mail icon"></i>
   				<input type="text" placeholder="请输入你的通知~" style="width: 550px;" id = "EmailContent">
   				<a class="ui blue tag label"> Email内容 </a>
+			</div>
+		</div>
+
+		<div class="actions">
+			<div class="ui positive labeled icon button" onclick="SendEmail()">
+				发 送
+				<i class="mail icon"></i>
+			</div>
+			<div class="ui right black button" onclick="cancelEma()">
+				取 消
+			</div>
+		</div>
+	</div>
+
+	<div class="small ui modal" id="sendLetterTable">
+		<i class="close icon"></i>
+		<div class="header">
+			站 内 信
+		</div>
+		<div class="content">
+			<div class="ui right labeled left icon input">
+  				<i class="mail icon"></i>
+  				<input type="text" placeholder="请输入你的通知~" style="width: 550px;" id = "EmailContent">
+  				<a class="ui blue tag label"> 站内信内容 </a>
 			</div>
 		</div>
 
@@ -335,6 +362,9 @@ var _hmt = _hmt || [];
 									<div class="mini ui blue button" style="float:right" onclick="sendMes()">
 										短 信
 									</div>
+									<div class="mini ui blue button" style="float:right" onclick="sendLet()">
+										站 内 信
+									</div>
 					
 								</div>
 
@@ -449,7 +479,6 @@ var _hmt = _hmt || [];
 
 								//sessionStorage.uidlist = dataObj.txt[n].uid+ " ";
 								fa.insertBefore(new_item,fa.getElementsByTagName("div")[7+8*n]);
-								//
 							}
 						}
 					}
