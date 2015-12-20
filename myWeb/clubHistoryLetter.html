@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Standard Meta -->
+  <meta charset="utf-8" />
+  <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">-->
+
+  <!-- Site Properities -->
+  <title>clubHistoryLetter</title>
+
+  <!--<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">-->
+
+  <link rel="stylesheet" type="text/css" href="../dist/semantic.css">
+  <link rel="stylesheet" type="text/css" href="clubActivityNameList.css" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+  <script src="../dist/semantic.js"></script>
+  <script type="text/javascript">
+  	function listdelete()
+  	{
+  		var xmlhttp;
+  		if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+         xmlhttp=new XMLHttpRequest();
+         }
+       else
+       {// code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  		}
+  		var max = document.getElementsByTagName("input").length-1;
+  		var jsonObj = "{\"uids\":[";
+  		for(var n = 1;n <=max ; n++)
+  		{
+  			if(document.getElementsByTagName("input")[n].checked==true)
+  				jsonObj +=+document.getElementsByTagName("input")[n].dataset.uid.toString()+",";
+  		}
+  		jsonObj = jsonObj.substring(jsonObj.length-1,0);
+  		jsonObj +="]}";
+
+  		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/articles/detail/"+sessionStorage["click_id"].toString()+"/list/delete",true);
+  		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
+		xmlhttp.setRequestHeader("token",sessionStorage.token);
+		xmlhttp.send(jsonObj);
+		xmlhttp.onreadystatechange = function()
+		{
+			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
+				location.reload();
+		}
+
+  	}
+  	
+    function clubDefault()
+    {
+  		window.location.href = "new_clubDefault.html";
+  	}
+	function ActivityCreate()
+	{
+	  	window.location.href = "new_clubActivityCreate.html";
+	}
+	function sendMes()
+	{
+		$("#sendMesTable").modal('show');
+	}
+	function sendEma()
+	{
+		$("#sendEmailTable").modal('show');
+	}
+	function sendLet()
+	{
+		$("#sendLetterTable").modal('show');
+	}
+	function cancelMes(){
+		$("#sendMesTable").modal('hide');
+	}
+	function cancelEma(){
+		$("#sendEmailTable").modal('hide');
+	}
+	function SendEmail()
+  	{
+  		var xmlhttp;
+  		if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+         xmlhttp=new XMLHttpRequest();
+         }
+       else
+       {// code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  		}
+  		var max = document.getElementsByTagName("input").length-1;
+  		var jsonObj = "{\"uids\":[";
+  		for(var n = 1;n <=max ; n++)
+  		{
+  			if(document.getElementsByTagName("input")[n].checked==true)
+  				jsonObj +=+document.getElementsByTagName("input")[n].dataset.uid.toString()+",";
+  		}
+  		jsonObj = jsonObj.substring(jsonObj.length-1,0);
+  		jsonObj +="],\"content\":\""+document.getElementById("EmailContent").value+"\",\"article_id\":"+sessionStorage["click_id"]+"}";
+
+  		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/sendemail",true);
+  			//articles/detail/"+sessionStorage["click_id"].toString()+"/list/delete",true);
+  		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
+		xmlhttp.setRequestHeader("token",sessionStorage.token);
+		xmlhttp.send(jsonObj);
+		xmlhttp.onreadystatechange = function()
+		{
+			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
+				location.reload();
+		}
+
+  	}
+  	function SendMessage()
+  	{
+  		var xmlhttp;
+  		if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+         xmlhttp=new XMLHttpRequest();
+         }
+       else
+       {// code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  		}
+  		var max = document.getElementsByTagName("input").length-1;
+  		var jsonObj = "{\"uids\":[";
+  		for(var n = 1;n <=max ; n++)
+  		{
+  			if(document.getElementsByTagName("input")[n].checked==true)
+  				jsonObj +=+document.getElementsByTagName("input")[n].dataset.uid.toString()+",";
+  		}
+  		jsonObj = jsonObj.substring(jsonObj.length-1,0);
+  		jsonObj +="],\"content\":\""+document.getElementById("MessageContent").value+"\",\"article_id\":"+sessionStorage["click_id"]+"}";
+
+  		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/sendmessage",true);
+  			//articles/detail/"+sessionStorage["click_id"].toString()+"/list/delete",true);
+  		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
+		xmlhttp.setRequestHeader("token",sessionStorage.token);
+		xmlhttp.send(jsonObj);
+		xmlhttp.onreadystatechange = function()
+		{
+			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
+				location.reload();
+		}
+
+  	}
+	function search()
+	{
+		alert("该功能还在开发中");
+	}
+	// function check(){
+ //  		if(sessionStorage.clubsigned==undefined)
+ //  			window.location.href = "clubSignIn.html";
+ //  	}
+  	function replacePicAndName(){
+  	var oldPic = document.getElementById('middle').getElementsByTagName('img')[0];
+  	var Pic = document.createElement('img');
+  	Pic.setAttribute('src',sessionStorage.pic_head);
+  	oldPic.parentNode.replaceChild(Pic,oldPic);
+  	var oldName = document.getElementById('logContainer').getElementsByTagName('a')[0];
+  	oldName.innerHTML = sessionStorage.name;
+  }
+  	// function check(){
+  	// 	if(sessionStorage.clubsigned==undefined)
+  	// 		window.location.href = "clubSignIn.html";
+  	// }
+</script>
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3666c9cf75dbb1c2a355491d82b6fe81";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+
+$(document).ready(function(){
+	    $('.ui.accordion').accordion({
+	    	selector: {
+	    		trigger: '.title .icon'
+	    	}
+	    });
+	});
+</script>
+
+
+</head>
+
+<body>
+	<script type="text/javascript">check();</script>
+	<div class="small ui modal" id="sendMesTable">
+		<i class="close icon"></i>
+		<div class="header">
+			通 知
+		</div>
+		<div class="content">
+			<div class="ui right labeled left icon input">
+  				<i class="mail icon"></i>
+  				<input type="text" placeholder="请输入你的通知~" style="width: 550px;" id = "MessageContent">
+  				<a class="ui blue tag label"> 短信内容 </a>
+			</div>
+		</div>
+
+		<div class="actions">
+			<div class="ui positive labeled icon button" onclick="SendMessage()">
+				发 送
+				<i class="mail icon"></i>
+			</div>
+			<div class="ui right black button" onclick="cancelMes()">
+				取 消
+			</div>
+		</div>
+	</div>
+
+	<div class="small ui modal" id="sendEmailTable">
+		<i class="close icon"></i>
+		<div class="header">
+			Email
+		</div>
+		<div class="content">
+			<div class="ui right labeled left icon input">
+  				<i class="mail icon"></i>
+  				<input type="text" placeholder="请输入你的通知~" style="width: 550px;" id = "EmailContent">
+  				<a class="ui blue tag label"> Email内容 </a>
+			</div>
+		</div>
+
+		<div class="actions">
+			<div class="ui positive labeled icon button" onclick="SendEmail()">
+				发 送
+				<i class="mail icon"></i>
+			</div>
+			<div class="ui right black button" onclick="cancelEma()">
+				取 消
+			</div>
+		</div>
+	</div>
+
+	<div class="small ui modal" id="sendLetterTable">
+		<i class="close icon"></i>
+		<div class="header">
+			站 内 信
+		</div>
+		<div class="content">
+			<div class="ui right labeled left icon input">
+  				<i class="mail icon"></i>
+  				<input type="text" placeholder="请输入你的通知~" style="width: 550px;" id = "EmailContent">
+  				<a class="ui blue tag label"> 站内信内容 </a>
+			</div>
+		</div>
+
+		<div class="actions">
+			<div class="ui positive labeled icon button" onclick="SendEmail()">
+				发 送
+				<i class="mail icon"></i>
+			</div>
+			<div class="ui right black button" onclick="cancelEma()">
+				取 消
+			</div>
+		</div>
+	</div>
+
+
+	<div>
+		<div id="gy_masthead">
+				<p id="name" style = "margin-top:10px;">BuaaClubs</p>
+				<div class="ui action left icon input" style="margin-top: 8px; margin-left: 850px; position: fixed">
+					<i class="search icon"></i>
+					<input type="text" placeholder="Search~~~" />
+					<div class="ui inverted yellow button" onClick = "search()">Search</div>
+				</div>
+		</div>
+
+		<div id="middle">
+			<div class="blank"></div>
+			<div id="container">
+
+				<div id="logContainer">
+					<div class="cardContainer">
+						<div class="ui yellow card">
+							<div class="image" style="padding 10px;">
+								<img src="images/lingfeng.jpg">
+							</div>
+							<div class="content">
+								<a class="header"> 凌 峰 社 </a>
+								<div class="meta">
+									<span class="date">2005年成立</span>
+								</div>
+							</div>
+							<div class="extra content">
+								<a><i class="sun icon"></i> 实践类社团 </a>
+							</div>
+							<div class="extra content">
+								<a><i class="user icon"></i> 50 members </a>
+							</div>
+						</div>
+					</div>
+
+					<div class="buttonContainer" style="margin-top: 15px;">
+						<!-- <div class="ui animated teal button" tabindex="0" style="width: 100%;" onclick="ActivityCreate()">
+							<div class="visible content" > 创 建 新 的 活 动 </div>
+							<div class="hidden content">
+								<i class="add circle icon"></i>
+							</div>
+						</div>
+
+						<div class="ui animated teal button" tabindex="0" style="width: 100%;" onclick="clubDefault()">
+							<div class="visible content"> 查 看 所 有 活 动 </div>
+							<div class="hidden content">
+								<i class="paw icon"></i>
+							</div>
+						</div> -->
+						<div class="buttonContainer">
+							<div class="ui vertical labeled icon buttons" style="width: 100%;">
+								<div class="ui teal labeled icon button" onclick="clubDefault()"> 后 台 首 页
+								 	<i class="paw icon"></i>
+								</div>
+								<div class="ui teal labeled icon button" onclick="ActivityCreate()">创 建 活 动
+									<i class="add circle icon"></i>
+								</div>
+								
+								<div class="ui teal labeled icon button" onclick="clubDefault()"> 活 动 名 单
+								 	<i class="table icon"></i>
+								</div>
+
+								<div class="ui teal labeled icon button" onclick="clubDefault()" style="background-color:#009d95;"> 历 史 站 内 信
+								 	<i class="table icon"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="news">
+					<div class="newsContainer">
+
+						<button class="ui small blue button" style="margin-left: 550px;">删除</button>
+
+						<div class="ui styled accordion" style="width: 700px; margin-top: 20px;">
+						  <div class="title">
+						  	<i class="dropdown icon"></i>
+						  			<div class="ui feed" style="display:inline-block;">
+							  			<div class="event">
+							  				<div class="label"><img src="images/Ali.jpeg"/></div>
+							  				<div class="content">
+							  					<div class="summary">
+							  						<a class="user"> 凌峰社</a> 发出了一条通知 <div class="date"> 1小时前 </div>
+							  					</div>
+							  				</div>
+							  				<div class="ui checkbox" style="margin-left:320px;"><input type="checkbox"><label> </label></div>
+							  			</div>
+						  			</div>
+						  </div>
+						  <div class="content">
+						    <p>明天十点集合哦~~</p>
+						  </div>
+
+						  <div class="title">
+						  	<i class="dropdown icon"></i>
+						  			<div class="ui feed" style="display:inline-block;">
+							  			<div class="event">
+							  				<div class="label"><img src="images/Ali.jpeg"/></div>
+							  				<div class="content">
+							  					<div class="summary">
+							  						<a class="user"> 凌峰社</a> 发出了一条通知 <div class="date"> 1小时前 </div>
+							  					</div>
+							  				</div>
+							  				<div class="ui checkbox" style="margin-left:320px;"><input type="checkbox"><label> </label></div>
+							  			</div>
+						  			</div>
+						  </div>
+						  <div class="content">
+						    <p>明天十点集合哦~~</p>
+						  </div>
+
+						  <div class="title">
+						  	<i class="dropdown icon"></i>
+						  			<div class="ui feed" style="display:inline-block;">
+							  			<div class="event">
+							  				<div class="label"><img src="images/Ali.jpeg"/></div>
+							  				<div class="content">
+							  					<div class="summary">
+							  						<a class="user"> 凌峰社</a> 发出了一条通知 <div class="date"> 1小时前 </div>
+							  					</div>
+							  				</div>
+							  				<div class="ui checkbox" style="margin-left:320px;"><input type="checkbox"><label> </label></div>
+							  			</div>
+						  			</div>
+						  </div>
+						  <div class="content">
+						    <p>明天十点集合哦~~</p>
+						  </div>
+						</div>
+					</div>
+				</div>
+		</div>
+	</div>
+		<div id="foot">
+				<div class="footFont" style="margin-left:250px; margin-top:10px;">
+					<div style="margin-top:10px; display:inline-block;"> 
+						<p style="color: white; font-size: 1.3em;">About us</p> 
+						<p><i class="qq icon"></i>QQ: 576156848</p>
+						<p><i class="mail icon"></i>Email: buaaclubs@163.com</p>
+					</div>
+					<div style="margin-top:10px; margin-left: 200px; display:inline-block;"> 
+						<p style="color: white; font-size: 1.3em;">Friendly Link</p> 
+						<p>XueBa<a href="http://115.28.39.28/"> http://115.28.39.28/</a></p>
+						<p>Phylab<a href="http://121.42.204.94/"> http://121.42.204.94/</a></p>
+					</div>
+
+					<div style="margin-top:10px; margin-left: 250px; display:inline-block;"> 
+						<p style="color: #e0e0e0; font-size: 2.7em; font-family: cursive;">BuaaClubs</p>
+					</div>
+				</div>
+		</div>
+	</div>
+	<script type="text/javascript">replacePicAndName();</script>
+	<script type = "text/javascript">
+		var article_id = sessionStorage["click_id"];
+	  	if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+			det_http = new XMLHttpRequest();
+		}
+		else
+		{// code for IE6, IE5
+			det_http = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		det_http.open("POST","http://www.buaaclubs.com/api/clubs/articles/detail/"+article_id+"/list",true);
+		det_http.setRequestHeader("uid",sessionStorage.uid);
+		det_http.setRequestHeader("token",sessionStorage.token);
+		det_http.send();
+		det_http.onreadystatechange = function()
+		{
+			if (det_http.readyState == 4)
+				if (det_http.status == 200)
+				{
+					var data = det_http.response;
+					var dataObj = eval("(" + data + ")");
+					sessionStorage.number = dataObj.txt.length;
+					if(sessionStorage.number == 0)
+  					{
+  						var news = document.getElementById("news");//.innerHTML = "无人报名"
+  						news.getElementsByTagName("div")[10].innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;当 前 活 动 无 人 报 名"
+  					}
+  					else
+  					{
+  						if(sessionStorage.number==1)
+  						{
+  							var item = document.getElementById("news").getElementsByTagName("div")[10];
+  							item.getElementsByTagName("input")[0].dataset.uid = dataObj.txt[0].uid;
+  							item.getElementsByTagName("div")[1].innerHTML = dataObj.txt[0].name.toString();
+	  						item.getElementsByTagName("div")[2].innerHTML = dataObj.txt[0].uid.toString();
+	  						item.getElementsByTagName("div")[3].innerHTML = dataObj.txt[0].phone_num.toString();
+	  						if(dataObj.txt[0].email==null)
+	  							item.getElementsByTagName("div")[4].innerHTML = "注册时未填写";
+	  						else
+	  							item.getElementsByTagName("div")[4].innerHTML = dataObj.txt[0].email.toString();
+	  						item.getElementsByTagName("div")[5].innerHTML = dataObj.txt[0].time.toString().substring(10,0);
+	  						if( dataObj.txt[0].content ==null){
+		  							item.getElementsByTagName("div")[6].innerHTML ="无";
+		  						}
+		  						else
+		  							item.getElementsByTagName("div")[6].innerHTML = dataObj.txt[0].content;
+	  					}
+	  					else{
+	  						var item = document.getElementById("news").getElementsByTagName("div")[10];
+  							item.getElementsByTagName("input")[0].dataset.uid = dataObj.txt[0].uid;
+  							item.getElementsByTagName("div")[1].innerHTML = dataObj.txt[0].name.toString();
+	  						item.getElementsByTagName("div")[2].innerHTML = dataObj.txt[0].uid.toString();
+	  						item.getElementsByTagName("div")[3].innerHTML = dataObj.txt[0].phone_num.toString();
+	  						if(dataObj.txt[0].email==null)
+	  							item.getElementsByTagName("div")[4].innerHTML = "注册时未填写";
+	  						else
+	  							item.getElementsByTagName("div")[4].innerHTML = dataObj.txt[0].email.toString();
+	  						item.getElementsByTagName("div")[5].innerHTML = dataObj.txt[0].time.toString().substring(10,0);
+	  						if( dataObj.txt[0].content ==null){
+		  							item.getElementsByTagName("div")[6].innerHTML ="无";
+		  						}
+		  						else
+		  							item.getElementsByTagName("div")[6].innerHTML = dataObj.txt[0].content;
+							for(var n = 1;n<dataObj.txt.length;n++){
+								var item = document.getElementById("news").getElementsByTagName("div")[10];
+								var fa = item.parentNode;
+								var new_item = item.cloneNode(true);
+		  						new_item.getElementsByTagName("input")[0].dataset.uid = dataObj.txt[n].uid;
+		  						new_item.getElementsByTagName("div")[1].innerHTML = dataObj.txt[n].name.toString();
+		  						new_item.getElementsByTagName("div")[2].innerHTML = dataObj.txt[n].uid.toString();
+		  						new_item.getElementsByTagName("div")[3].innerHTML = dataObj.txt[n].phone_num.toString();
+		  						if(dataObj.txt[n].email==null)
+	  								new_item.getElementsByTagName("div")[4].innerHTML = "注册时未填写";
+	  							else
+	  								new_item.getElementsByTagName("div")[4].innerHTML = dataObj.txt[n].email.toString();
+		  						new_item.getElementsByTagName("div")[5].innerHTML = dataObj.txt[n].time.toString().substring(10,0);
+		  						if( dataObj.txt[n].content ==null){
+		  							new_item.getElementsByTagName("div")[6].innerHTML ="无";
+		  						}
+		  						else
+		  							new_item.getElementsByTagName("div")[6].innerHTML = dataObj.txt[n].content;
+
+								//sessionStorage.uidlist = dataObj.txt[n].uid+ " ";
+								fa.insertBefore(new_item,fa.getElementsByTagName("div")[7+8*n]);
+							}
+						}
+					}
+				}
+				else
+				{
+					alert("error");
+				}
+		}
+	</script>
+
+
+	
+</body>
+
+</html>
