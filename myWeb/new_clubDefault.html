@@ -74,7 +74,6 @@
 		xmlhttp.open("GET","http://www.buaaclubs.com/api/clubs/"+sessionStorage.uid+"/articles/" + page.toString(),true);
 		//xmlhttp.open("GET","http://www.buaaclubs.com/api/clubs/mimi/articles/" + page.toString(),true);
 		xmlhttp.send();
-
 		xmlhttp.onreadystatechange = function()
 		{
 			if (xmlhttp.readyState == 4)
@@ -94,7 +93,6 @@
 						var new_ele = ele.cloneNode(true);
 						new_ele.getElementsByTagName("DIV")[0].getElementsByTagName("DIV")[0].getElementsByTagName("SPAN")[0].innerHTML = dataObj.txt[cnt % 5].article_title;
 						new_ele.getElementsByTagName("DIV")[0].getElementsByTagName("DIV")[0].getElementsByTagName("SPAN")[0].dataset.art_id_club = dataObj.txt[cnt % 5].article_id.toString();
-
 						new_ele.getElementsByTagName("DIV")[0].getElementsByTagName("DIV")[2].getElementsByTagName("P")[0].innerHTML = dataObj.txt[cnt % 5].article_abstract;
 						new_ele.getElementsByTagName("DIV")[5].getElementsByTagName("DIV")[1].getElementsByTagName("I")[0].dataset.art_id_club = dataObj.txt[cnt % 5].article_id.toString();
 						new_ele.getElementsByTagName("DIV")[5].dataset.art_id_club = dataObj.txt[cnt % 5].article_id.toString();
@@ -104,7 +102,6 @@
 						new_ele.getElementsByTagName("DIV")[5].onClick = function(){activityDelete(this)};
 						new_ele.getElementsByTagName("DIV")[8].onClick = function(){activityEdit(this)};
 						new_ele.getElementsByTagName("DIV")[11].onClick = function(){activityEdit(this)};
-
 						fa.insertBefore(new_ele,child);
 						if (sessionStorage.art_id_club == "")
 							sessionStorage.art_id_club = dataObj.txt[cnt % 5].article_id.toString();
@@ -141,22 +138,18 @@
 				location.reload();
 		}
 	}
-
 	function activityEdit(obj){
 		sessionStorage.setItem("click_id",obj.dataset.art_id_club);
 		window.location.href = "new_clubActivityEdit.html";
 	}
-
 	function ActivityCreate(){
 		window.location.href = "new_clubActivityCreate.html";
 	}
-
 	function activityList(obj){
 		sessionStorage.setItem("click_id",obj.dataset.art_id_club);
 		window.location.href = "new_clubActivityNameList.html";
 	}
 	
-
 	function showDet(obj)
 	{
   		sessionStorage.setItem("click_id",obj.dataset.art_id_club);
@@ -169,7 +162,6 @@
     {
     	alert("该功能还在开发中");
     }
-
     function replacePicAndName(){
   	var oldPic = document.getElementById('middle').getElementsByTagName('img')[0];
   	var Pic = document.createElement('img');
@@ -187,13 +179,11 @@
   		oldPic.parentNode.replaceChild(Pic,oldPic);
   		};
   		//<img class="ui avatar image" src="images/lingfeng.jpg"  style="margin-left: 15px; margin-top: 10px;"/>
-
   }
   	function check(){
-  		if(sessionStorage.clubsigned==undefined)
-  			window.location.href = "clubSignIn.html";
+  		/*if(sessionStorage.clubsigned==undefined)
+  			window.location.href = "clubSignIn.html";*/
   	}
-
   </script>
 
   <script>
@@ -208,7 +198,7 @@ var _hmt = _hmt || [];
 </head>
 
 <body style="font-size: 14px;">
-<script type="text/javascript">check();</script>
+ <script type="text/javascript">check();</script>
 	<div>
 		<div id="gy_masthead">
 				<!-- <div class="ui fluid catagory search" style="margin-top: 8px; margin-right: 155px; float:right;">
@@ -256,7 +246,6 @@ var _hmt = _hmt || [];
 							<button class="large fluid ui black labeled icon button">  活动广场 
 								<i class="announcement icon"></i>
 							</button>
-
 							<button class="large fluid ui black labeled icon button" style="margin-top: 15px;"> 社团荟萃
 								 <i class="users icon"></i>
 							</button>
@@ -267,7 +256,6 @@ var _hmt = _hmt || [];
 								<i class="add circle icon"></i>
 							</div>
 						</div>
-
 						<div class="ui animated teal button" tabindex="0" style="width: 100%;" onclick="clubDefault()">
 							<div class="visible content" > 查 看 所 有 活 动 </div>
 							<div class="hidden content">
@@ -282,7 +270,12 @@ var _hmt = _hmt || [];
 								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">创 建 活 动
 									<i class="add circle icon"></i>
 								</div>
-								
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">查 看 历 史 消 息
+									<i class="mail outline icon"></i>
+								</div>
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">社 员 管 理
+									<i class="users icon"></i>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -297,7 +290,6 @@ var _hmt = _hmt || [];
 								<i class="add circle icon"></i>
 							</div>
 						</div>
-
 						<div class="large ui animated teal button" tabindex="0" style="margin-top: 15px; margin-left: auto; margin-right: auto; float: right;" >
 							<div class="visible content"> 查 看 所 有 活 动 </div>
 							<div class="hidden content" onclick="clubDefault()">
@@ -311,223 +303,102 @@ var _hmt = _hmt || [];
 
 				<div id="news">
 					<div class="newsContainer">
-
-						<a class="ui link card" style="width: 100%;">
-							<div class="content">
-								<div class="header">
-									<img class="ui avatar image" src="images/lingfeng.jpg"  style="margin-left: 15px; margin-top: 10px;"/>
-									<span style="margin-top:20px; margin-left: 10px;" id = "head0" onClick = "showDet(this)"></span>
-								</div>
-								<div class="meta" style="margin-top:6px; margin-left: 10px;">
-									<span  style="margin-top:20px; margin-left: 10px;"> </span>
-								</div>
-								<div class="description">
-									<p id = "abstract0"></p>
-								</div>
+						<div class="ui raised segment">
+							<div class="ui secondary pointing teal menu">
+							  <a class="active item">全部 </a>
+							  <a class="item">活动 </a>
+							  <a class="item">资讯 </a>
 							</div>
-
-							<div class="extra content">
-								<!-- <button class="mini ui grey button" style="float: right"><i class="remove circle icon"></i> 删 除 </button>
-								<button class="mini ui grey button" style="float: right"><i class="edit icon"></i> 编 辑 </button>
-								<button class="mini ui grey button" style="float: right"><i class="table icon"></i> 名 单 </button> -->
-
-								<div class="mini ui animated grey button" tabindex="0" style="float: right" onClick="activityDelete(this)">
-									<div class="visible content" > 删 除 </div>
-									<div class="hidden content" >
-										<i class="remove circle icon" ></i>
+							<div class="ui segment">
+								<a class="ui link card" style="width: 100%;">
+									<div class="content">
+										<div class="header">
+											<img class="ui avatar image" src="images/lingfeng.jpg"  style="margin-left: 15px; margin-top: 10px;"/>
+											<span style="margin-top:20px; margin-left: 10px;" id = "head0" onClick = "showDet(this)"></span>
+										</div>
+										<div class="meta" style="margin-top:6px; margin-left: 10px;">
+											<span  style="margin-top:20px; margin-left: 10px;"> </span>
+										</div>
+										<div class="description">
+											<p id = "abstract0"></p>
+										</div>
 									</div>
-								</div>
 
-								<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityEdit(this)">
-									<div class="visible content" > 编 辑 </div>
-									<div class="hidden content">
-										<i class="edit icon"></i>
+									<div class="extra content">
+										<!-- <button class="mini ui grey button" style="float: right"><i class="remove circle icon"></i> 删 除 </button>
+										<button class="mini ui grey button" style="float: right"><i class="edit icon"></i> 编 辑 </button>
+										<button class="mini ui grey button" style="float: right"><i class="table icon"></i> 名 单 </button> -->
+
+										<div class="mini ui animated grey button" tabindex="0" style="float: right" onClick="activityDelete(this)">
+											<div class="visible content" > 删 除 </div>
+											<div class="hidden content" >
+												<i class="remove circle icon" ></i>
+											</div>
+										</div>
+
+										<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityEdit(this)">
+											<div class="visible content" > 编 辑 </div>
+											<div class="hidden content">
+												<i class="edit icon"></i>
+											</div>
+										</div>
+
+										<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityList(this)">
+											<div class="visible content" > 名 单 </div>
+											<div class="hidden content" >
+												<i class="table icon"></i>
+											</div>
+										</div>
+
 									</div>
-								</div>
+								</a>
 
-								<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityList(this)">
-									<div class="visible content" > 名 单 </div>
-									<div class="hidden content" >
-										<i class="table icon"></i>
+								<a class="ui link card" style="width: 100%;" >
+									<div class="content">  
+										<div class="header">
+											<img class="ui avatar image" src="images/lingfeng.jpg"  style="margin-left: 15px; margin-top: 10px;"/>
+											<span style="margin-top:20px; margin-left: 10px;" id = "head4" onClick = "showDet(this)"></span>
+										</div>
+										<div class="meta" style="margin-top:6px; margin-left: 10px;">
+											<span  style="margin-top:20px; margin-left: 10px;"> </span>
+										</div>
+										<div class="description">
+											<p id = "abstract4"></p>
+										</div>
 									</div>
-								</div>
 
+									<div class="extra content">
+										<!-- <button class="mini ui grey button" style="float: right"><i class="remove circle icon"></i> 删 除 </button>
+										<button class="mini ui grey button" style="float: right"><i class="edit icon"></i> 编 辑 </button>
+										<button class="mini ui grey button" style="float: right"><i class="table icon"></i> 名 单 </button> -->
+
+										<div class="mini ui animated grey button" tabindex="0" style="float: right" onClick="activityDelete(this)">
+											<div class="visible content" > 删 除 </div>
+											<div class="hidden content">
+												<i class="remove circle icon"></i>
+											</div>
+										</div>
+
+										<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityEdit(this)">
+											<div class="visible content" > 编 辑 </div>
+											<div class="hidden content" >
+												<i class="edit icon"></i>
+											</div>
+										</div>
+
+										<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityList(this)">
+											<div class="visible content" > 名 单 </div>
+											<div class="hidden content" >
+												<i class="table icon"></i>
+											</div>
+										</div>
+
+									</div>
+								</a>
+								
+								<button class="tiny ui grey button" onClick = "showNext()" id = "next" style="width: 100%;"> 加 载 更 多 </button>
 							</div>
-						</a>
-
-						<a class="ui link card" style="width: 100%;">
-							<div class="content">
-								<div class="header">
-									<img class="ui avatar image" src="images/lingfeng.jpg"  style="margin-left: 15px; margin-top: 10px;"/>
-									<span style="margin-top:20px; margin-left: 10px;" id = "head1" onClick = "showDet(this)"></span>
-								</div>
-								<div class="meta" style="margin-top:6px; margin-left: 10px;">
-									<span  style="margin-top:20px; margin-left: 10px;"> </span>
-								</div>
-								<div class="description">
-									<p id = "abstract1"></p>
-								</div>
-							</div>
-
-							<div class="extra content">
-								<!-- <button class="mini ui grey button" style="float: right"><i class="remove circle icon"></i> 删 除 </button>
-								<button class="mini ui grey button" style="float: right"><i class="edit icon"></i> 编 辑 </button>
-								<button class="mini ui grey button" style="float: right"><i class="table icon"></i> 名 单 </button> -->
-
-								<div class="mini ui animated grey button" tabindex="0" style="float: right" onClick="activityDelete(this)">
-									<div class="visible content" > 删 除 </div>
-									<div class="hidden content" >
-										<i class="remove circle icon"></i>
-									</div>
-								</div>
-
-								<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityEdit(this)">
-									<div class="visible content" > 编 辑 </div>
-									<div class="hidden content" >
-										<i class="edit icon"></i>
-									</div>
-								</div>
-
-								<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityList(this)">
-									<div class="visible content" > 名 单 </div>
-									<div class="hidden content" >
-										<i class="table icon"></i>
-									</div>
-								</div>
-
-							</div>
-						</a>
-
-						<a class="ui link card" style="width: 100%;" >
-							<div class="content">
-								<div class="header">
-									<img class="ui avatar image" src="images/lingfeng.jpg"  style="margin-left: 15px; margin-top: 10px;"/>
-									<span style="margin-top:20px; margin-left: 10px;" id = "head2" onClick = "showDet(this)"></span>
-								</div>
-								<div class="meta" style="margin-top:6px; margin-left: 10px;">
-									<span  style="margin-top:20px; margin-left: 10px;"> </span>
-								</div>
-								<div class="description">
-									<p id = "abstract2"></p>
-								</div>
-							</div>
-
-							<div class="extra content">
-								<!-- <button class="mini ui grey button" style="float: right"><i class="remove circle icon"></i> 删 除 </button>
-								<button class="mini ui grey button" style="float: right"><i class="edit icon"></i> 编 辑 </button>
-								<button class="mini ui grey button" style="float: right"><i class="table icon"></i> 名 单 </button> -->
-
-								<div class="mini ui animated grey button" tabindex="0" style="float: right" onClick="activityDelete(this)">
-									<div class="visible content" > 删 除 </div>
-									<div class="hidden content" >
-										<i class="remove circle icon"></i>
-									</div>
-								</div>
-
-								<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityEdit(this)">
-									<div class="visible content" > 编 辑 </div>
-									<div class="hidden content" >
-										<i class="edit icon"></i>
-									</div>
-								</div>
-
-								<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityList(this)">
-									<div class="visible content" > 名 单 </div>
-									<div class="hidden content">
-										<i class="table icon"></i>
-									</div>
-								</div>
-
-							</div>
-						</a>
-
-						<a class="ui link card" style="width: 100%;">
-							<div class="content">
-								<div class="header">
-									<img class="ui avatar image" src="images/lingfeng.jpg"  style="margin-left: 15px; margin-top: 10px;"/>
-									<span style="margin-top:20px; margin-left: 10px;" id = "head3" onClick = "showDet(this)"></span>
-								</div>
-								<div class="meta" style="margin-top:6px; margin-left: 10px;">
-									<span  style="margin-top:20px; margin-left: 10px;"> </span>
-								</div>
-								<div class="description">
-									<p id = "abstract3"></p>
-								</div>
-							</div>
-
-							<div class="extra content">
-								<!-- <button class="mini ui grey button" style="float: right"><i class="remove circle icon"></i> 删 除 </button>
-								<button class="mini ui grey button" style="float: right"><i class="edit icon"></i> 编 辑 </button>
-								<button class="mini ui grey button" style="float: right"><i class="table icon"></i> 名 单 </button> -->
-
-								<div class="mini ui animated grey button" tabindex="0" style="float: right" onClick="activityDelete(this)" >
-									<div class="visible content"> 删 除 </div>
-									<div class="hidden content">
-										<i class="remove circle icon"></i>
-									</div>
-								</div>
-
-								<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityEdit(this)">
-									<div class="visible content" > 编 辑 </div>
-									<div class="hidden content" >
-										<i class="edit icon"></i>
-									</div>
-								</div>
-
-								<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityList(this)">
-									<div class="visible content" > 名 单 </div>
-									<div class="hidden content" >
-										<i class="table icon"></i>
-									</div>
-								</div>
-
-							</div>
-						</a>
-
-						<a class="ui link card" style="width: 100%;" >
-							<div class="content">  
-								<div class="header">
-									<img class="ui avatar image" src="images/lingfeng.jpg"  style="margin-left: 15px; margin-top: 10px;"/>
-									<span style="margin-top:20px; margin-left: 10px;" id = "head4" onClick = "showDet(this)"></span>
-								</div>
-								<div class="meta" style="margin-top:6px; margin-left: 10px;">
-									<span  style="margin-top:20px; margin-left: 10px;"> </span>
-								</div>
-								<div class="description">
-									<p id = "abstract4"></p>
-								</div>
-							</div>
-
-							<div class="extra content">
-								<!-- <button class="mini ui grey button" style="float: right"><i class="remove circle icon"></i> 删 除 </button>
-								<button class="mini ui grey button" style="float: right"><i class="edit icon"></i> 编 辑 </button>
-								<button class="mini ui grey button" style="float: right"><i class="table icon"></i> 名 单 </button> -->
-
-								<div class="mini ui animated grey button" tabindex="0" style="float: right" onClick="activityDelete(this)">
-									<div class="visible content" > 删 除 </div>
-									<div class="hidden content">
-										<i class="remove circle icon"></i>
-									</div>
-								</div>
-
-								<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityEdit(this)">
-									<div class="visible content" > 编 辑 </div>
-									<div class="hidden content" >
-										<i class="edit icon"></i>
-									</div>
-								</div>
-
-								<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityList(this)">
-									<div class="visible content" > 名 单 </div>
-									<div class="hidden content" >
-										<i class="table icon"></i>
-									</div>
-								</div>
-
-							</div>
-						</a>
-						
-						<button class="tiny ui grey button" onClick = "showNext()" id = "next" style="width: 100%;"> 加 载 更 多 </button>
+						</div>
 
 					</div>
 				</div>

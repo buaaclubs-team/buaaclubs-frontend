@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">-->
 
   <!-- Site Properities -->
-  <title>clubActivityNameList</title>
+  <title>clubHistoryLetter</title>
 
   <!--<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">-->
 
@@ -36,7 +36,6 @@
   		}
   		jsonObj = jsonObj.substring(jsonObj.length-1,0);
   		jsonObj +="]}";
-
   		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/articles/detail/"+sessionStorage["click_id"].toString()+"/list/delete",true);
   		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
 		xmlhttp.setRequestHeader("token",sessionStorage.token);
@@ -46,7 +45,6 @@
 			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
 				location.reload();
 		}
-
   	}
   	
     function clubDefault()
@@ -57,93 +55,10 @@
 	{
 	  	window.location.href = "new_clubActivityCreate.html";
 	}
-	function sendMes()
-	{
-		$("#sendMesTable").modal('show');
-	}
-	function sendEma()
-	{
-		$("#sendEmailTable").modal('show');
-	}
-	function sendLet()
-	{
-		$("#sendLetterTable").modal('show');
-	}
-	function cancelMes(){
-		$("#sendMesTable").modal('hide');
-	}
-	function cancelEma(){
-		$("#sendEmailTable").modal('hide');
-	}
-	function SendEmail()
-  	{
-  		var xmlhttp;
-  		if (window.XMLHttpRequest)
-        {// code for IE7+, Firefox, Chrome, Opera, Safari
-         xmlhttp=new XMLHttpRequest();
-         }
-       else
-       {// code for IE6, IE5
-      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  		}
-  		var max = document.getElementsByTagName("input").length-1;
-  		var jsonObj = "{\"uids\":[";
-  		for(var n = 1;n <=max ; n++)
-  		{
-  			if(document.getElementsByTagName("input")[n].checked==true)
-  				jsonObj +=+document.getElementsByTagName("input")[n].dataset.uid.toString()+",";
-  		}
-  		jsonObj = jsonObj.substring(jsonObj.length-1,0);
-  		jsonObj +="],\"content\":\""+document.getElementById("EmailContent").value+"\",\"article_id\":"+sessionStorage["click_id"]+"}";
-
-  		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/sendemail",true);
-  			//articles/detail/"+sessionStorage["click_id"].toString()+"/list/delete",true);
-  		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
-		xmlhttp.setRequestHeader("token",sessionStorage.token);
-		xmlhttp.send(jsonObj);
-		xmlhttp.onreadystatechange = function()
-		{
-			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
-				location.reload();
-		}
-
-  	}
-  	function SendMessage()
-  	{
-  		var xmlhttp;
-  		if (window.XMLHttpRequest)
-        {// code for IE7+, Firefox, Chrome, Opera, Safari
-         xmlhttp=new XMLHttpRequest();
-         }
-       else
-       {// code for IE6, IE5
-      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  		}
-  		var max = document.getElementsByTagName("input").length-1;
-  		var jsonObj = "{\"uids\":[";
-  		for(var n = 1;n <=max ; n++)
-  		{
-  			if(document.getElementsByTagName("input")[n].checked==true)
-  				jsonObj +=+document.getElementsByTagName("input")[n].dataset.uid.toString()+",";
-  		}
-  		jsonObj = jsonObj.substring(jsonObj.length-1,0);
-  		jsonObj +="],\"content\":\""+document.getElementById("MessageContent").value+"\",\"article_id\":"+sessionStorage["click_id"]+"}";
-
-  		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/sendmessage",true);
-  			//articles/detail/"+sessionStorage["click_id"].toString()+"/list/delete",true);
-  		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
-		xmlhttp.setRequestHeader("token",sessionStorage.token);
-		xmlhttp.send(jsonObj);
-		xmlhttp.onreadystatechange = function()
-		{
-			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
-				location.reload();
-		}
-
-  	}
+	
 	function search()
 	{
-		alert("è¯¥åŠŸèƒ½è¿˜åœ¨å¼€å‘ä¸­");
+		alert("¸Ã¹¦ÄÜ»¹ÔÚ¿ª·¢ÖĞ");
 	}
   	function replacePicAndName(){
   	var oldPic = document.getElementById('middle').getElementsByTagName('img')[0];
@@ -167,6 +82,13 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
+$(document).ready(function(){
+	    $('.ui.accordion').accordion({
+	    	selector: {
+	    		trigger: '.title .icon'
+	    	}
+	    });
+	});
 </script>
 
 
@@ -174,79 +96,7 @@ var _hmt = _hmt || [];
 
 <body>
 	<script type="text/javascript">check();</script>
-	<div class="small ui modal" id="sendMesTable">
-		<i class="close icon"></i>
-		<div class="header">
-			é€š çŸ¥
-		</div>
-		<div class="content">
-			<div class="ui right labeled left icon input">
-  				<i class="mail icon"></i>
-  				<input type="text" placeholder="è¯·è¾“å…¥ä½ çš„é€šçŸ¥~" style="width: 550px;" id = "MessageContent">
-  				<a class="ui blue tag label"> çŸ­ä¿¡å†…å®¹ </a>
-			</div>
-		</div>
-
-		<div class="actions">
-			<div class="ui positive labeled icon button" onclick="SendMessage()">
-				å‘ é€
-				<i class="mail icon"></i>
-			</div>
-			<div class="ui right black button" onclick="cancelMes()">
-				å– æ¶ˆ
-			</div>
-		</div>
-	</div>
-
-	<div class="small ui modal" id="sendEmailTable">
-		<i class="close icon"></i>
-		<div class="header">
-			Email
-		</div>
-		<div class="content">
-			<div class="ui right labeled left icon input">
-  				<i class="mail icon"></i>
-  				<input type="text" placeholder="è¯·è¾“å…¥ä½ çš„é€šçŸ¥~" style="width: 550px;" id = "EmailContent">
-  				<a class="ui blue tag label"> Emailå†…å®¹ </a>
-			</div>
-		</div>
-
-		<div class="actions">
-			<div class="ui positive labeled icon button" onclick="SendEmail()">
-				å‘ é€
-				<i class="mail icon"></i>
-			</div>
-			<div class="ui right black button" onclick="cancelEma()">
-				å– æ¶ˆ
-			</div>
-		</div>
-	</div>
-
-	<div class="small ui modal" id="sendLetterTable">
-		<i class="close icon"></i>
-		<div class="header">
-			ç«™ å†… ä¿¡
-		</div>
-		<div class="content">
-			<div class="ui right labeled left icon input">
-  				<i class="mail icon"></i>
-  				<input type="text" placeholder="è¯·è¾“å…¥ä½ çš„é€šçŸ¥~" style="width: 550px;" id = "EmailContent">
-  				<a class="ui blue tag label"> ç«™å†…ä¿¡å†…å®¹ </a>
-			</div>
-		</div>
-
-		<div class="actions">
-			<div class="ui positive labeled icon button" onclick="SendEmail()">
-				å‘ é€
-				<i class="mail icon"></i>
-			</div>
-			<div class="ui right black button" onclick="cancelEma()">
-				å– æ¶ˆ
-			</div>
-		</div>
-	</div>
-
-
+	
 	<div>
 		<div id="gy_masthead">
 				<p id="name" style = "margin-top:10px;">BuaaClubs</p>
@@ -268,13 +118,13 @@ var _hmt = _hmt || [];
 								<img src="images/lingfeng.jpg">
 							</div>
 							<div class="content">
-								<a class="header"> å‡Œ å³° ç¤¾ </a>
+								<a class="header"> Áè ·å Éç </a>
 								<div class="meta">
-									<span class="date">2005å¹´æˆç«‹</span>
+									<span class="date">2005Äê³ÉÁ¢</span>
 								</div>
 							</div>
 							<div class="extra content">
-								<a><i class="sun icon"></i> å®è·µç±»ç¤¾å›¢ </a>
+								<a><i class="sun icon"></i> Êµ¼ùÀàÉçÍÅ </a>
 							</div>
 							<div class="extra content">
 								<a><i class="user icon"></i> 50 members </a>
@@ -284,29 +134,35 @@ var _hmt = _hmt || [];
 
 					<div class="buttonContainer" style="margin-top: 15px;">
 						<!-- <div class="ui animated teal button" tabindex="0" style="width: 100%;" onclick="ActivityCreate()">
-							<div class="visible content" > åˆ› å»º æ–° çš„ æ´» åŠ¨ </div>
+							<div class="visible content" > ´´ ½¨ ĞÂ µÄ »î ¶¯ </div>
 							<div class="hidden content">
 								<i class="add circle icon"></i>
 							</div>
 						</div>
-
 						<div class="ui animated teal button" tabindex="0" style="width: 100%;" onclick="clubDefault()">
-							<div class="visible content"> æŸ¥ çœ‹ æ‰€ æœ‰ æ´» åŠ¨ </div>
+							<div class="visible content"> ²é ¿´ Ëù ÓĞ »î ¶¯ </div>
 							<div class="hidden content">
 								<i class="paw icon"></i>
 							</div>
 						</div> -->
 						<div class="buttonContainer">
 							<div class="ui vertical labeled icon buttons" style="width: 100%;">
-								<div class="ui teal labeled icon button" onclick="clubDefault()"> å å° é¦– é¡µ
+								<div class="ui teal labeled icon button" onclick="clubDefault()"> ºó Ì¨ Ê× Ò³
 								 	<i class="paw icon"></i>
 								</div>
-								<div class="ui teal labeled icon button" onclick="ActivityCreate()">åˆ› å»º æ´» åŠ¨
+								<div class="ui teal labeled icon button" onclick="ActivityCreate()">´´ ½¨ »î ¶¯
 									<i class="add circle icon"></i>
 								</div>
 								
-								<div class="ui teal labeled icon button" onclick="clubDefault()" style="background-color:#009d95;"> æ´» åŠ¨ å å•
+								<div class="ui teal labeled icon button" onclick="clubDefault()"> »î ¶¯ Ãû µ¥
 								 	<i class="table icon"></i>
+								</div>
+
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()" style="background-color:#009d95;">²é ¿´ Àú Ê· Ïû Ï¢
+									<i class="mail outline icon"></i>
+								</div>
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">Éç Ô± ¹Ü Àí
+									<i class="users icon"></i>
 								</div>
 							</div>
 						</div>
@@ -315,62 +171,56 @@ var _hmt = _hmt || [];
 
 				<div id="news">
 					<div class="newsContainer">
-						<div class="ui raised segment">
-							<a class="ui red ribbon label"> æ´» åŠ¨ å å• </a>
 
-							<div class="ui middle aligned divided list">
+						<div class="ui pointing teal menu">
+						  <a class="active item">È« ²¿</a>
+						  <a class="item">Õ¾ ÄÚ ĞÅ</a>
+						  <a class="item">¶Ì ĞÅ</a>
+						  <a class="item">Email</a>
+						</div>
+						<div class="ui segment">
+						  <div class="ui styled accordion" style="width: 700px; margin-top: 20px;">
+						  <div class="title">
+						  	<i class="dropdown icon"></i>
+						  			<div class="ui feed" style="display:inline-block;">
+							  			<div class="event">
+							  				<div class="label"><img src="images/Ali.jpeg"/></div>
+							  				<div class="content">
+							  					<div class="summary">
+							  						<a class="user"> Áè·åÉç</a> ·¢³öÁËÒ»ÌõÍ¨Öª <div class="date"> 1Ğ¡Ê±Ç° </div>
+							  					</div>
+							  				</div>
+							  				<div class="ui checkbox" style="margin-left:320px;"><input type="checkbox"><label> </label></div>
+							  			</div>
+						  			</div>
+						  </div>
+						  <div class="content">
+						    <p>Ã÷ÌìÊ®µã¼¯ºÏÅ¶~~</p>
+						  </div>
 
-								<div class="item">
-									<div style="margin-left:35px; display: inline-block; width: 60px;" > å§“ å </div>
-									<div style="display: inline-block; width: 100px;" > å­¦ å· </div>
-									<div style="display: inline-block; width: 100px;" > æ‰‹ æœº å· </div>
-									<div style="display: inline-block; width: 180px;" > é‚® ç®± </div>
-									<div style="display: inline-block; width: 100px;" > æ—¥ æœŸ </div>
-									<div style="display: inline-block; width: 70px;" > å¤‡ æ³¨ </div>
-								</div>
-								
-								<div class="item">
-									<div class="ui checkbox">
-										<input type="checkbox" name="example">
-										<label>
-											<div class = "description" style="margin-left:10px; display: inline-block; width: 60px;" ><p id = "_name"></p></div>
-											<div class = "description" style="display: inline-block; width: 100px;" ><p id = "_uid"></p></div>
-											<div class = "description" style="display: inline-block; width: 100px;"><p id = "_phone_number"></p> </div>
-											<div class = "description" style="display: inline-block; width: 180px;"><p id = "_email"></p> </div>
-											<div class = "description" style="display: inline-block; width: 100px;"><p id = "_date"></p> </div>
-											<div class = "description" style="display: inline-block; width: 70px;" ><p id = "_content"></p></div>
-										</lable>
-									</div>
-								</div>
-								
-
-								<div class="item" id = "end">
-									<div class="mini ui animated grey button" tabindex="0" style="float:right">
-										<div class="visible content"> åˆ  é™¤ </div>
-										<div class="hidden content" onclick="listdelete()">
-											<i class="remove circle icon"></i>
-										</div>
-									</div>
-
-									<div class="mini ui blue button" style="float:right" onclick="sendEma()">
-										Email
-									</div>
-									<div class="mini ui blue button" style="float:right" onclick="sendMes()">
-										çŸ­ ä¿¡
-									</div>
-									<div class="mini ui blue button" style="float:right" onclick="sendLet()">
-										ç«™ å†… ä¿¡
-									</div>
-					
-								</div>
-
-							</div>
+						  <div class="title">
+						  	<i class="dropdown icon"></i>
+						  			<div class="ui feed" style="display:inline-block;">
+							  			<div class="event">
+							  				<div class="label"><img src="images/Ali.jpeg"/></div>
+							  				<div class="content">
+							  					<div class="summary">
+							  						<a class="user"> Áè·åÉç</a> ·¢³öÁËÒ»ÌõÍ¨Öª <div class="date"> 1Ğ¡Ê±Ç° </div>
+							  					</div>
+							  				</div>
+							  				<div class="ui checkbox" style="margin-left:320px;"><input type="checkbox"><label> </label></div>
+							  			</div>
+						  			</div>
+						  </div>
+						  <div class="content">
+						    <p>Ã÷ÌìÊ®µã¼¯ºÏÅ¶~~</p>
+						  </div>
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
+	</div>
 		<div id="foot">
 				<div class="footFont" style="margin-left:250px; margin-top:10px;">
 					<div style="margin-top:10px; display:inline-block;"> 
@@ -415,8 +265,8 @@ var _hmt = _hmt || [];
 					sessionStorage.number = dataObj.txt.length;
 					if(sessionStorage.number == 0)
   					{
-  						var news = document.getElementById("news");//.innerHTML = "æ— äººæŠ¥å"
-  						news.getElementsByTagName("div")[10].innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;å½“ å‰ æ´» åŠ¨ æ—  äºº æŠ¥ å"
+  						var news = document.getElementById("news");//.innerHTML = "ÎŞÈË±¨Ãû"
+  						news.getElementsByTagName("div")[10].innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;µ± Ç° »î ¶¯ ÎŞ ÈË ±¨ Ãû"
   					}
   					else
   					{
@@ -428,12 +278,12 @@ var _hmt = _hmt || [];
 	  						item.getElementsByTagName("div")[2].innerHTML = dataObj.txt[0].uid.toString();
 	  						item.getElementsByTagName("div")[3].innerHTML = dataObj.txt[0].phone_num.toString();
 	  						if(dataObj.txt[0].email==null)
-	  							item.getElementsByTagName("div")[4].innerHTML = "æ³¨å†Œæ—¶æœªå¡«å†™";
+	  							item.getElementsByTagName("div")[4].innerHTML = "×¢²áÊ±Î´ÌîĞ´";
 	  						else
 	  							item.getElementsByTagName("div")[4].innerHTML = dataObj.txt[0].email.toString();
 	  						item.getElementsByTagName("div")[5].innerHTML = dataObj.txt[0].time.toString().substring(10,0);
 	  						if( dataObj.txt[0].content ==null){
-		  							item.getElementsByTagName("div")[6].innerHTML ="æ— ";
+		  							item.getElementsByTagName("div")[6].innerHTML ="ÎŞ";
 		  						}
 		  						else
 		  							item.getElementsByTagName("div")[6].innerHTML = dataObj.txt[0].content;
@@ -445,12 +295,12 @@ var _hmt = _hmt || [];
 	  						item.getElementsByTagName("div")[2].innerHTML = dataObj.txt[0].uid.toString();
 	  						item.getElementsByTagName("div")[3].innerHTML = dataObj.txt[0].phone_num.toString();
 	  						if(dataObj.txt[0].email==null)
-	  							item.getElementsByTagName("div")[4].innerHTML = "æ³¨å†Œæ—¶æœªå¡«å†™";
+	  							item.getElementsByTagName("div")[4].innerHTML = "×¢²áÊ±Î´ÌîĞ´";
 	  						else
 	  							item.getElementsByTagName("div")[4].innerHTML = dataObj.txt[0].email.toString();
 	  						item.getElementsByTagName("div")[5].innerHTML = dataObj.txt[0].time.toString().substring(10,0);
 	  						if( dataObj.txt[0].content ==null){
-		  							item.getElementsByTagName("div")[6].innerHTML ="æ— ";
+		  							item.getElementsByTagName("div")[6].innerHTML ="ÎŞ";
 		  						}
 		  						else
 		  							item.getElementsByTagName("div")[6].innerHTML = dataObj.txt[0].content;
@@ -463,16 +313,15 @@ var _hmt = _hmt || [];
 		  						new_item.getElementsByTagName("div")[2].innerHTML = dataObj.txt[n].uid.toString();
 		  						new_item.getElementsByTagName("div")[3].innerHTML = dataObj.txt[n].phone_num.toString();
 		  						if(dataObj.txt[n].email==null)
-	  								new_item.getElementsByTagName("div")[4].innerHTML = "æ³¨å†Œæ—¶æœªå¡«å†™";
+	  								new_item.getElementsByTagName("div")[4].innerHTML = "×¢²áÊ±Î´ÌîĞ´";
 	  							else
 	  								new_item.getElementsByTagName("div")[4].innerHTML = dataObj.txt[n].email.toString();
 		  						new_item.getElementsByTagName("div")[5].innerHTML = dataObj.txt[n].time.toString().substring(10,0);
 		  						if( dataObj.txt[n].content ==null){
-		  							new_item.getElementsByTagName("div")[6].innerHTML ="æ— ";
+		  							new_item.getElementsByTagName("div")[6].innerHTML ="ÎŞ";
 		  						}
 		  						else
 		  							new_item.getElementsByTagName("div")[6].innerHTML = dataObj.txt[n].content;
-
 								//sessionStorage.uidlist = dataObj.txt[n].uid+ " ";
 								fa.insertBefore(new_item,fa.getElementsByTagName("div")[7+8*n]);
 							}

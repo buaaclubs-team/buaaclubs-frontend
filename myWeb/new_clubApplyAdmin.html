@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Standard Meta -->
+  <meta charset="utf-8" />
+  <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">-->
+
+  <!-- Site Properities -->
+  <title>clubApplyAdmin</title>
+
+  <!--<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">-->
+
+  <link rel="stylesheet" type="text/css" href="../dist/semantic.css">
+  <link rel="stylesheet" type="text/css" href="clubActivityNameList.css" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+  <script src="../dist/semantic.js"></script>
+  <script>
+  	function check()
+  	{
+
+  	}
+  	function initial()
+  	{
+  		check();
+  		getNameList();
+  	}
+  	function getNameList()
+  	{
+  		var xmlhttp;
+  		if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+         	xmlhttp=new XMLHttpRequest();
+        }
+       else
+        {// code for IE6, IE5
+      		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  		}
+  		xmlhttp.open("GET","http://www.buaaclubs.com/api/clubs/members/all",true);
+  			//articles/detail/"+sessionStorage["click_id"].toString()+"/list/delete",true);
+  		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
+		xmlhttp.setRequestHeader("token",sessionStorage.token);
+		xmlhttp.send();
+		xmlhttp.onreadystatechange = function()
+		{
+			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
+			{
+				var dataObj = eval("(" + xmlhttp.response + ")");
+				var txt = dataObj.txt;
+				var i;
+				for (i = 0; i < txt.length; i++)
+				{
+					var ele = document.getElementById("list");
+					var fa = ele.parentNode;
+					if (i == 0)
+					{	
+						var ele1 = ele.getElementByTagName("DIV")[0].getElementByTagName("LABEL")[0];
+						ele1.getElementByTagName("DIV")[0].getElementByTagName("P")[0].innerHTML = txt[i].uid;
+						ele1.getElementByTagName("DIV")[1].getElementByTagName("P")[0].innerHTML = txt[i].name;
+						ele1.getElementByTagName("DIV")[2].getElementByTagName("P")[0].innerHTML = txt[i].time;
+						ele1.getElementByTagName("DIV")[3].getElementByTagName("P")[0].innerHTML = txt[i].reason;
+						ele1.getElementByTagName("DIV")[4].getElementByTagName("P")[0].innerHTML = txt[i].user_head;
+					}
+					else
+					{
+						var new_ele = ele.cloneNode(true);
+						var ele1 = new_ele.getElementByTagName("DIV")[0].getElementByTagName("LABEL")[0];
+						ele1.getElementByTagName("DIV")[0].getElementByTagName("P")[0].innerHTML = txt[i].uid;
+						ele1.getElementByTagName("DIV")[1].getElementByTagName("P")[0].innerHTML = txt[i].name;
+						ele1.getElementByTagName("DIV")[2].getElementByTagName("P")[0].innerHTML = txt[i].time;
+						ele1.getElementByTagName("DIV")[3].getElementByTagName("P")[0].innerHTML = txt[i].reason;
+						ele1.getElementByTagName("DIV")[4].getElementByTagName("P")[0].innerHTML = txt[i].user_head;
+						fa.insertBefore(new_ele,document.getElementById("end"));
+					}
+				}
+			}
+		}
+  	}
+  	function accept()
+  	{
+  		var xmlhttp;
+  		if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+         xmlhttp=new XMLHttpRequest();
+         }
+        else
+        {// code for IE6, IE5
+      		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  		}
+  		var max = document.getElementsByTagName("input").length-1;
+  		var jsonObj = "{\"uids\":[";
+  		for(var n = 0;n <= max ; n++)
+  		{
+  			if(document.getElementsByTagName("input")[n].checked==true)
+  				jsonObj += document.getElementsByTagName("input")[n].getElementById("DIV")[1].getElementsByTagName("P")[0].innerHTML + ",";
+  		}
+
+  		jsonObj = jsonObj.substring(jsonObj.length-1,0);
+  		jsonObj +="]}";
+
+  		xmlhttp.open("GET","http://www.buaaclubs.com/api/clubs/members/apply/accept",true);
+  		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
+		xmlhttp.setRequestHeader("token",sessionStorage.token);
+		xmlhttp.send(jsonObj);
+		xmlhttp.onreadystatechange = function()
+		{
+			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
+			{
+				alert("操作成功");
+			}
+			else
+			{
+				alert("操作失败");
+			}
+		}
+  	}
+  	function refuse()
+  	{
+  		var xmlhttp;
+  		if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+         xmlhttp=new XMLHttpRequest();
+         }
+        else
+        {// code for IE6, IE5
+      		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  		}
+  		var max = document.getElementsByTagName("input").length-1;
+  		var jsonObj = "{\"uids\":[";
+  		for(var n = 0;n <= max ; n++)
+  		{
+  			if(document.getElementsByTagName("input")[n].checked==true)
+  				jsonObj += document.getElementsByTagName("input")[n].getElementById("DIV")[1].getElementsByTagName("P")[0].innerHTML + ",";
+  		}
+
+  		jsonObj = jsonObj.substring(jsonObj.length-1,0);
+  		jsonObj +="],reason:"+document.getElementById("reasonContent").value + "}";
+
+  		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/members/apply/refuse",true);
+  		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
+		xmlhttp.setRequestHeader("token",sessionStorage.token);
+		xmlhttp.send(jsonObj);
+		xmlhttp.onreadystatechange = function()
+		{
+			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
+			{
+				alert("操作成功");
+			}
+			else
+			{
+				alert("操作失败");
+			}
+		}
+  	}
+  	function refuse_window(){
+		$("#refuse_window").modal('show');
+	}
+  </script>
+</head>
+
+<body>
+	<script type="text/javascript">initial();</script>
+	
+	<div class="small ui modal" id="refuse_window">
+		<i class="close icon"></i>
+		<div class="header">
+			审核不通过原因
+		</div>
+		<div class="content">
+			<div class="ui right labeled left icon input">
+  				<input type="text" placeholder="请输入原因" style="width: 550px;" id = "reasonContent">
+  				<a class="ui blue tag label"> 原因 </a>
+			</div>
+		</div>
+
+		<div class="actions">
+			<div class="ui positive button" onclick = "refuse()">
+				确 定
+			</div>
+			<div class="ui right black button">
+				取 消
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<div id="gy_masthead">
+				<p id="name" style = "margin-top:10px;">BuaaClubs</p>
+				<div class="ui action left icon input" style="margin-top: 8px; margin-left: 850px; position: fixed">
+					<i class="search icon"></i>
+					<input type="text" placeholder="Search~~~" />
+					<div class="ui inverted yellow button" onClick = "search()">Search</div>
+				</div>
+		</div>
+
+		<div id="middle">
+			<div class="blank"></div>
+			<div id="container">
+
+				<div id="logContainer">
+					<div class="cardContainer">
+						<div class="ui yellow card">
+							<div class="image" style="padding 10px;">
+								<img src="images/lingfeng.jpg">
+							</div>
+							<div class="content">
+								<a class="header"> 凌 峰 社 </a>
+								<div class="meta">
+									<span class="date">2005年成立</span>
+								</div>
+							</div>
+							<div class="extra content">
+								<a><i class="sun icon"></i> 实践类社团 </a>
+							</div>
+							<div class="extra content">
+								<a><i class="user icon"></i> 50 members </a>
+							</div>
+						</div>
+					</div>
+
+					<div class="buttonContainer" style="margin-top: 15px;">
+						<!-- <div class="ui animated teal button" tabindex="0" style="width: 100%;" onclick="ActivityCreate()">
+							<div class="visible content" > 创 建 新 的 活 动 </div>
+							<div class="hidden content">
+								<i class="add circle icon"></i>
+							</div>
+						</div>
+						<div class="ui animated teal button" tabindex="0" style="width: 100%;" onclick="clubDefault()">
+							<div class="visible content"> 查 看 所 有 活 动 </div>
+							<div class="hidden content">
+								<i class="paw icon"></i>
+							</div>
+						</div> -->
+						<div class="buttonContainer">
+							<div class="ui vertical labeled icon buttons" style="width: 100%;">
+								<div class="ui teal labeled icon button" onclick="clubDefault()"> 后 台 首 页
+								 	<i class="paw icon"></i>
+								</div>
+								<div class="ui teal labeled icon button" onclick="ActivityCreate()">创 建 活 动
+									<i class="add circle icon"></i>
+								</div>								
+								<div class="ui teal labeled icon button" onclick="clubDefault()"> 活 动 名 单
+								 	<i class="table icon"></i>
+								</div>
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">查 看 历 史 消 息
+									<i class="mail outline icon"></i>
+								</div>
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()" style="background-color:#009d95;">社 员 管 理
+									<i class="users icon"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="news">
+					<div class="newsContainer">
+						<div class="ui raised segment">
+							<div class="ui secondary pointing teal menu">
+							  <a class="item">社员名单 </a>
+							  <a class="active item">申请名单 </a>
+							</div>
+							<div class="ui segment">
+							  <div class="ui middle aligned divided list">
+
+								<div class="item">
+									<div style="margin-left:35px; display: inline-block; width: 60px;" > 学 号 </div>
+									<div style="display: inline-block; width: 100px;" > 姓 名 </div>
+									<div style="display: inline-block; width: 100px;" > 申 请 时 间</div>
+									<div style="display: inline-block; width: 180px;" > 申 请 理 由</div>
+									<div style="display: inline-block; width: 70px;" > 头 像 </div>
+								</div>
+								
+								<div class="item" id = "list">
+									<div class="ui checkbox">
+										<input type="checkbox" name="example">
+										<label>
+											<div class = "description" style="margin-left:10px; display: inline-block; width: 60px;" ><p id = "uid"></p></div>
+											<div class = "description" style="display: inline-block; width: 100px;" ><p id = "name"></p></div>
+											<div class = "description" style="display: inline-block; width: 100px;"><p id = "time"></p> </div>
+											<div class = "description" style="display: inline-block; width: 180px;"><p id = "reason"></p> </div>
+											<div class = "description" style="display: inline-block; width: 100px;"><p id = "user_head"></p> </div>
+										</lable>
+									</div>
+								</div>
+								
+
+								<div class="item" id = "end">
+									<!-- <div class="mini ui animated grey button" tabindex="0" style="float:right">
+										<div class="visible content"> 删 除 </div>
+										<div class="hidden content" onclick="listdelete()">
+											<i class="remove circle icon"></i>
+										</div>
+									</div>
+									<div class="mini ui positive button" style="float:right" onclick="sendEma()">
+										同 意
+									</div> -->
+									<div class="ui buttons" style="float:right">
+									  <button class="ui mini positive button" onclick = "accept()">同 意</button>
+									  <div class="or"></div>
+									  <button class="ui mini button" onclick = "refuse_window()">拒 绝</button>
+									</div>
+					
+								</div>
+
+							</div>
+							</div>
+
+							
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div id="foot">
+				<div class="footFont" style="margin-left:250px; margin-top:10px;">
+					<div style="margin-top:10px; display:inline-block;"> 
+						<p style="color: white; font-size: 1.3em;">About us</p> 
+						<p><i class="qq icon"></i>QQ: 576156848</p>
+						<p><i class="mail icon"></i>Email: buaaclubs@163.com</p>
+					</div>
+					<div style="margin-top:10px; margin-left: 200px; display:inline-block;"> 
+						<p style="color: white; font-size: 1.3em;">Friendly Link</p> 
+						<p>XueBa<a href="http://115.28.39.28/"> http://115.28.39.28/</a></p>
+						<p>Phylab<a href="http://121.42.204.94/"> http://121.42.204.94/</a></p>
+					</div>
+
+					<div style="margin-top:10px; margin-left: 250px; display:inline-block;"> 
+						<p style="color: #e0e0e0; font-size: 2.7em; font-family: cursive;">BuaaClubs</p>
+					</div>
+				</div>
+		</div>
+	</div>
+	
+
+	
+</body>
+
+</html>
