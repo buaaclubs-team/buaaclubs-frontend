@@ -16,9 +16,10 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
   <script src="../dist/semantic.js"></script>
   <script type="text/javascript">
-  	function listdelete()
+  	function viewLetter()
   	{
   		var xmlhttp;
+  		var cnt = -1;
   		if (window.XMLHttpRequest)
         {// code for IE7+, Firefox, Chrome, Opera, Safari
          xmlhttp=new XMLHttpRequest();
@@ -27,26 +28,32 @@
        {// code for IE6, IE5
       xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
   		}
-  		var max = document.getElementsByTagName("input").length-1;
-  		var jsonObj = "{\"uids\":[";
-  		for(var n = 1;n <=max ; n++)
-  		{
-  			if(document.getElementsByTagName("input")[n].checked==true)
-  				jsonObj +=+document.getElementsByTagName("input")[n].dataset.uid.toString()+",";
-  		}
-  		jsonObj = jsonObj.substring(jsonObj.length-1,0);
-  		jsonObj +="]}";
-
-  		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/articles/detail/"+sessionStorage["click_id"].toString()+"/list/delete",true);
+  		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/webmails/readall",true);
   		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
 		xmlhttp.setRequestHeader("token",sessionStorage.token);
-		xmlhttp.send(jsonObj);
+		xmlhttp.send();
 		xmlhttp.onreadystatechange = function()
 		{
-			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
-				location.reload();
-		}
+			if(xmlhttp.readyState==4&&xmlhttp.status==200)
+			{
+				var data = xmlhttp.response;
+				var dataObj = eval("("+data+")");
+				var len = dataObj.length();
+				for(var i=0;i<len;i++)
+				{
+					var ele1 = document.getElementById("news").getElementsByTagName("DIV")[0].getElementsByTagName("DIV")[1].getElementsByTagName("DIV")[i*2+1];
+					var ele2 = document.getElementById("news").getElementsByTagName("DIV")[0].getElementsByTagName("DIV")[1].getElementsByTagName("DIV")[i*2+2];
+					var fa = ele1.parentNode;
+					var new_ele1 = ele1.cloneNode(true);
+					var new_ele2 = ele1.cloneNode(true);
+					new_ele1.getElementsByTagName("A")[0].innerHTML =dataObj.content.substring(0,20);
+					new_ele2.getElementsByTagName("P")[0].innerHTML = dataObj.content;
+					fa.insertBefore(new_ele2,ele1);
+					fa.insertBefore(new_ele1,new_ele2);
 
+				}
+			}
+		}
   	}
   	
     function clubDefault()
@@ -60,12 +67,8 @@
 	
 	function search()
 	{
-		alert("è¯¥åŠŸèƒ½è¿˜åœ¨å¼€å‘ä¸­");
+		alert("¸Ã¹¦ÄÜ»¹ÔÚ¿ª·¢ÖĞ");
 	}
-	function check(){
-  		if(sessionStorage.clubsigned==undefined)
-  			window.location.href = "clubSignIn.html";
-  	}
   	function replacePicAndName(){
   	var oldPic = document.getElementById('middle').getElementsByTagName('img')[0];
   	var Pic = document.createElement('img');
@@ -75,8 +78,8 @@
   	oldName.innerHTML = sessionStorage.name;
   }
   	function check(){
-  		if(sessionStorage.clubsigned==undefined)
-  			window.location.href = "clubSignIn.html";
+  		/*if(sessionStorage.clubsigned==undefined)
+  			window.location.href = "clubSignIn.html";*/
   	}
 </script>
 
@@ -88,7 +91,6 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-
 $(document).ready(function(){
 	    $('.ui.accordion').accordion({
 	    	selector: {
@@ -125,13 +127,13 @@ $(document).ready(function(){
 								<img src="images/lingfeng.jpg">
 							</div>
 							<div class="content">
-								<a class="header"> å‡Œ å³° ç¤¾ </a>
+								<a class="header"> Áè ·å Éç </a>
 								<div class="meta">
-									<span class="date">2005å¹´æˆç«‹</span>
+									<span class="date">2005Äê³ÉÁ¢</span>
 								</div>
 							</div>
 							<div class="extra content">
-								<a><i class="sun icon"></i> å®è·µç±»ç¤¾å›¢ </a>
+								<a><i class="sun icon"></i> Êµ¼ùÀàÉçÍÅ </a>
 							</div>
 							<div class="extra content">
 								<a><i class="user icon"></i> 50 members </a>
@@ -141,35 +143,34 @@ $(document).ready(function(){
 
 					<div class="buttonContainer" style="margin-top: 15px;">
 						<!-- <div class="ui animated teal button" tabindex="0" style="width: 100%;" onclick="ActivityCreate()">
-							<div class="visible content" > åˆ› å»º æ–° çš„ æ´» åŠ¨ </div>
+							<div class="visible content" > ´´ ½¨ ĞÂ µÄ »î ¶¯ </div>
 							<div class="hidden content">
 								<i class="add circle icon"></i>
 							</div>
 						</div>
-
 						<div class="ui animated teal button" tabindex="0" style="width: 100%;" onclick="clubDefault()">
-							<div class="visible content"> æŸ¥ çœ‹ æ‰€ æœ‰ æ´» åŠ¨ </div>
+							<div class="visible content"> ²é ¿´ Ëù ÓĞ »î ¶¯ </div>
 							<div class="hidden content">
 								<i class="paw icon"></i>
 							</div>
 						</div> -->
 						<div class="buttonContainer">
 							<div class="ui vertical labeled icon buttons" style="width: 100%;">
-								<div class="ui teal labeled icon button" onclick="clubDefault()"> å å° é¦– é¡µ
+								<div class="ui teal labeled icon button" onclick="clubDefault()"> ºó Ì¨ Ê× Ò³
 								 	<i class="paw icon"></i>
 								</div>
-								<div class="ui teal labeled icon button" onclick="ActivityCreate()">åˆ› å»º æ´» åŠ¨
+								<div class="ui teal labeled icon button" onclick="ActivityCreate()">´´ ½¨ »î ¶¯
 									<i class="add circle icon"></i>
 								</div>
 								
-								<div class="ui teal labeled icon button" onclick="clubDefault()"> æ´» åŠ¨ å å•
+								<div class="ui teal labeled icon button" onclick="clubDefault()"> »î ¶¯ Ãû µ¥
 								 	<i class="table icon"></i>
 								</div>
 
-								<div class="ui teal labeled icon button"  onclick="ActivityCreate()" style="background-color:#009d95;">æŸ¥ çœ‹ å† å² æ¶ˆ æ¯
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()" style="background-color:#009d95;">²é ¿´ Àú Ê· Ïû Ï¢
 									<i class="mail outline icon"></i>
 								</div>
-								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">ç¤¾ å‘˜ ç®¡ ç†
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">Éç Ô± ¹Ü Àí
 									<i class="users icon"></i>
 								</div>
 							</div>
@@ -181,9 +182,9 @@ $(document).ready(function(){
 					<div class="newsContainer">
 
 						<div class="ui pointing teal menu">
-						  <a class="active item">å…¨ éƒ¨</a>
-						  <a class="item">ç«™ å†… ä¿¡</a>
-						  <a class="item">çŸ­ ä¿¡</a>
+						  <a class="active item">È« ²¿</a>
+						  <a class="item">Õ¾ ÄÚ ĞÅ</a>
+						  <a class="item">¶Ì ĞÅ</a>
 						  <a class="item">Email</a>
 						</div>
 						<div class="ui segment">
@@ -195,7 +196,7 @@ $(document).ready(function(){
 							  				<div class="label"><img src="images/Ali.jpeg"/></div>
 							  				<div class="content">
 							  					<div class="summary">
-							  						<a class="user"> å‡Œå³°ç¤¾</a> å‘å‡ºäº†ä¸€æ¡é€šçŸ¥ <div class="date"> 1å°æ—¶å‰ </div>
+							  						<a class="user"> Áè·åÉç</a> ·¢³öÁËÒ»ÌõÍ¨Öª <div class="date"> 1Ğ¡Ê±Ç° </div>
 							  					</div>
 							  				</div>
 							  				<div class="ui checkbox" style="margin-left:320px;"><input type="checkbox"><label> </label></div>
@@ -203,7 +204,7 @@ $(document).ready(function(){
 						  			</div>
 						  </div>
 						  <div class="content">
-						    <p>æ˜å¤©åç‚¹é›†åˆå“¦~~</p>
+						    <p>Ã÷ÌìÊ®µã¼¯ºÏÅ¶~~</p>
 						  </div>
 
 						  <div class="title">
@@ -213,7 +214,7 @@ $(document).ready(function(){
 							  				<div class="label"><img src="images/Ali.jpeg"/></div>
 							  				<div class="content">
 							  					<div class="summary">
-							  						<a class="user"> å‡Œå³°ç¤¾</a> å‘å‡ºäº†ä¸€æ¡é€šçŸ¥ <div class="date"> 1å°æ—¶å‰ </div>
+							  						<a class="user"> Áè·åÉç</a> ·¢³öÁËÒ»ÌõÍ¨Öª <div class="date"> 1Ğ¡Ê±Ç° </div>
 							  					</div>
 							  				</div>
 							  				<div class="ui checkbox" style="margin-left:320px;"><input type="checkbox"><label> </label></div>
@@ -221,7 +222,7 @@ $(document).ready(function(){
 						  			</div>
 						  </div>
 						  <div class="content">
-						    <p>æ˜å¤©åç‚¹é›†åˆå“¦~~</p>
+						    <p>Ã÷ÌìÊ®µã¼¯ºÏÅ¶~~</p>
 						  </div>
 						</div>
 					</div>
@@ -250,7 +251,7 @@ $(document).ready(function(){
 	</div>
 	<script type="text/javascript">replacePicAndName();</script>
 	<script type = "text/javascript">
-		var article_id = sessionStorage["click_id"];
+		/*var article_id = sessionStorage["click_id"];
 	  	if (window.XMLHttpRequest)
 		{// code for IE7+, Firefox, Chrome, Opera, Safari
 			det_http = new XMLHttpRequest();
@@ -273,8 +274,8 @@ $(document).ready(function(){
 					sessionStorage.number = dataObj.txt.length;
 					if(sessionStorage.number == 0)
   					{
-  						var news = document.getElementById("news");//.innerHTML = "æ— äººæŠ¥å"
-  						news.getElementsByTagName("div")[10].innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;å½“ å‰ æ´» åŠ¨ æ—  äºº æŠ¥ å"
+  						var news = document.getElementById("news");//.innerHTML = "ÎŞÈË±¨Ãû"
+  						news.getElementsByTagName("div")[10].innerHTML = "&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;µ± Ç° »î ¶¯ ÎŞ ÈË ±¨ Ãû"
   					}
   					else
   					{
@@ -286,12 +287,12 @@ $(document).ready(function(){
 	  						item.getElementsByTagName("div")[2].innerHTML = dataObj.txt[0].uid.toString();
 	  						item.getElementsByTagName("div")[3].innerHTML = dataObj.txt[0].phone_num.toString();
 	  						if(dataObj.txt[0].email==null)
-	  							item.getElementsByTagName("div")[4].innerHTML = "æ³¨å†Œæ—¶æœªå¡«å†™";
+	  							item.getElementsByTagName("div")[4].innerHTML = "×¢²áÊ±Î´ÌîĞ´";
 	  						else
 	  							item.getElementsByTagName("div")[4].innerHTML = dataObj.txt[0].email.toString();
 	  						item.getElementsByTagName("div")[5].innerHTML = dataObj.txt[0].time.toString().substring(10,0);
 	  						if( dataObj.txt[0].content ==null){
-		  							item.getElementsByTagName("div")[6].innerHTML ="æ— ";
+		  							item.getElementsByTagName("div")[6].innerHTML ="ÎŞ";
 		  						}
 		  						else
 		  							item.getElementsByTagName("div")[6].innerHTML = dataObj.txt[0].content;
@@ -303,12 +304,12 @@ $(document).ready(function(){
 	  						item.getElementsByTagName("div")[2].innerHTML = dataObj.txt[0].uid.toString();
 	  						item.getElementsByTagName("div")[3].innerHTML = dataObj.txt[0].phone_num.toString();
 	  						if(dataObj.txt[0].email==null)
-	  							item.getElementsByTagName("div")[4].innerHTML = "æ³¨å†Œæ—¶æœªå¡«å†™";
+	  							item.getElementsByTagName("div")[4].innerHTML = "×¢²áÊ±Î´ÌîĞ´";
 	  						else
 	  							item.getElementsByTagName("div")[4].innerHTML = dataObj.txt[0].email.toString();
 	  						item.getElementsByTagName("div")[5].innerHTML = dataObj.txt[0].time.toString().substring(10,0);
 	  						if( dataObj.txt[0].content ==null){
-		  							item.getElementsByTagName("div")[6].innerHTML ="æ— ";
+		  							item.getElementsByTagName("div")[6].innerHTML ="ÎŞ";
 		  						}
 		  						else
 		  							item.getElementsByTagName("div")[6].innerHTML = dataObj.txt[0].content;
@@ -321,16 +322,15 @@ $(document).ready(function(){
 		  						new_item.getElementsByTagName("div")[2].innerHTML = dataObj.txt[n].uid.toString();
 		  						new_item.getElementsByTagName("div")[3].innerHTML = dataObj.txt[n].phone_num.toString();
 		  						if(dataObj.txt[n].email==null)
-	  								new_item.getElementsByTagName("div")[4].innerHTML = "æ³¨å†Œæ—¶æœªå¡«å†™";
+	  								new_item.getElementsByTagName("div")[4].innerHTML = "×¢²áÊ±Î´ÌîĞ´";
 	  							else
 	  								new_item.getElementsByTagName("div")[4].innerHTML = dataObj.txt[n].email.toString();
 		  						new_item.getElementsByTagName("div")[5].innerHTML = dataObj.txt[n].time.toString().substring(10,0);
 		  						if( dataObj.txt[n].content ==null){
-		  							new_item.getElementsByTagName("div")[6].innerHTML ="æ— ";
+		  							new_item.getElementsByTagName("div")[6].innerHTML ="ÎŞ";
 		  						}
 		  						else
 		  							new_item.getElementsByTagName("div")[6].innerHTML = dataObj.txt[n].content;
-
 								//sessionStorage.uidlist = dataObj.txt[n].uid+ " ";
 								fa.insertBefore(new_item,fa.getElementsByTagName("div")[7+8*n]);
 							}
@@ -341,7 +341,7 @@ $(document).ready(function(){
 				{
 					alert("error");
 				}
-		}
+		}*/
 	</script>
 
 

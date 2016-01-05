@@ -22,6 +22,7 @@
     <script type="text/javascript" charset="utf-8" src="lang/zh-cn/zh-cn.js"></script>
     <script type="text/javascript">
   var xmlhttp;
+  var kind;
   function Save(){
      if (window.XMLHttpRequest)
         {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -35,24 +36,27 @@
     {
     if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
+    	window.location.href = "new_clubDefault1.html";
+    }
+}
         //var data = xmlhttp.response;
         //var dataObj =eval("("+data+")");
         //alert(xmlhttp.responseText);
-        window.location.href = "new_clubDefault.html";
-    }
-  }
- 		 var article_id = sessionStorage["click_id"];
+	 var article_id = sessionStorage["click_id"];
+	 kind = sessionStorage["kind"];
         //xmlhttp.open("POST","http://www.buaaclubs.com/api/users/"+"${sessionStorage.uid}"+"/articles/notes/create",true);
         xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/articles/detail/"+article_id.toString()+"/update",true);
         xmlhttp.setRequestHeader("Content-Type"," ");
         xmlhttp.setRequestHeader("uid",sessionStorage.uid);
 		xmlhttp.setRequestHeader("token",sessionStorage.token);
-        var row = {title:document.getElementById("btitle").innerHTML,abstract:UE.getEditor('editor').getContentTxt().substring(0,350)+"...",content:UE.getEditor('editor').getContent()};
+		var date = document.getElementById("deadline").getElementsByTagName("SELECT");
+	    var d = date[0].value.toString()+"-"+date[1].value.toString()+"-"+date[2].value.toString()+" "+date[3].value.toString();
+        var row = {title:document.getElementById("atitle").value.toString(),abstract:UE.getEditor('editor').getContentTxt().substring(0,350)+"...",content:UE.getEditor('editor').getContent(),type:kind.toString(),date:d.toString()};
         var jsonObj = JSON.stringify(row);
         xmlhttp.send(jsonObj);
   }
     function clubDefault(){
-  	window.location.href = "new_clubDefault.html";
+  	window.location.href = "new_clubDefault1.html";
   }
 
   function ActivityCreate(){
@@ -75,7 +79,9 @@
   		if(sessionStorage.clubsigned==undefined)
   			window.location.href = "clubSignIn.html";
   	}
-
+function userAdmin(){
+  	window.location.href = "new_clubUsersAdmin.html";
+  }
   </script>
 
 <script>
@@ -91,7 +97,7 @@ var _hmt = _hmt || [];
 </head>
 
 <body>
-<!--<script type="text/javascript">check();</script>-->
+<script type="text/javascript">check();</script>
 	<div>
 		<div id="gy_masthead">
 				<!-- <div class="ui fluid catagory search" style="margin-top: 8px; margin-right: 155px; float:right;">
@@ -158,13 +164,13 @@ var _hmt = _hmt || [];
 									<i class="add circle icon"></i>
 								</div>
 								
-								<div class="ui teal labeled icon button" onclick="clubDefault()" style="background-color:#009d95;"> 编 辑 活 动 
+								<div class="ui teal labeled icon button"  style="background-color:#009d95;"> 编 辑 活 动 
 								 	<i class="edit icon"></i>
 								</div>
-								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">查 看 历 史 消 息
+								<div class="ui teal labeled icon button"  onclick="search()">查 看 历 史 消 息
 									<i class="mail outline icon"></i>
 								</div>
-								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">社 员 管 理
+								<div class="ui teal labeled icon button"  onclick="userAdmin()">社 员 管 理
 									<i class="users icon"></i>
 								</div>
 							</div>
@@ -198,11 +204,100 @@ var _hmt = _hmt || [];
 					<!--start of ueditor-->
 						<div>
 		    				<h1>编辑</h1>
+		    				<div class="ui segment">
+					    				
+					    				<!--<p>标题</p><input type ="text" id = "atitle" align="middle" >-->
+					    				<div class="ui small labeled input" style="margin-top:10px;">
+										  <div class="ui label">标题 </div>
+										  <input type="text" id = "atitle" placeholder="">
+										</div>
 
-		    				<a class="ui teal tag label">活动</a>
-
-		    				<p id = "atitle" style="margin-top:20px">标题</p>
-		    				<p id = "btitle">标题</p>
+					    				<div class="inline field" style="margin-top:10px;" id ="deadline">
+										    <div class="ui right pointing label">截止日期 </div>
+										    <select class="ui search dropdown">
+										  <option value="">year</option>
+										  <option value="2014">2014</option>
+										  <option value="2015">2015</option>
+										  <option value="2016">2016</option>
+										  <option value="2017">2017</option>
+										</select>
+										<select class="ui search dropdown">
+										  <option value="">month</option>
+										  <option value="1">1</option>
+										  <option value="2">2</option>
+										  <option value="3">3</option>
+										  <option value="4">4</option>
+										  <option value="5">5</option>
+										  <option value="6">6</option>
+										  <option value="7">7</option>
+										  <option value="8">8</option>
+										  <option value="9">9</option>
+										  <option value="10">10</option>
+										  <option value="11">11</option>
+										  <option value="12">12</option>
+										</select>
+										<select class="ui search dropdown">
+										  <option value="">day</option>
+										  <option value="1">1</option>
+										  <option value="2">2</option>
+										  <option value="3">3</option>
+										  <option value="4">4</option>
+										  <option value="5">5</option>
+										  <option value="6">6</option>
+										  <option value="7">7</option>
+										  <option value="8">8</option>
+										  <option value="9">9</option>
+										  <option value="10">10</option>
+										  <option value="11">11</option>
+										  <option value="12">12</option>
+										  <option value="13">13</option>
+										  <option value="14">14</option>
+										  <option value="15">15</option>
+										  <option value="16">16</option>
+										  <option value="17">17</option>
+										  <option value="18">18</option>
+										  <option value="19">19</option>
+										  <option value="20">20</option>
+										  <option value="21">21</option>
+										  <option value="22">22</option>
+										  <option value="23">23</option>
+										  <option value="24">24</option>
+										  <option value="25">25</option>
+										  <option value="26">26</option>
+										  <option value="27">27</option>
+										  <option value="28">28</option>
+										  <option value="29">29</option>
+										  <option value="30">30</option>
+										  <option value="31">31</option>
+										</select>
+										<select class="ui search dropdown">
+										  <option value="">hour</option>
+										  <option value="1:00">1:00</option>
+										  <option value="2:00">2:00</option>
+										  <option value="3:00">3:00</option>
+										  <option value="4:00">4:00</option>
+										  <option value="5:00">5:00</option>
+										  <option value="6:00">6:00</option>
+										  <option value="7:00">7:00</option>
+										  <option value="8:00">8:00</option>
+										  <option value="9:00">9:00</option>
+										  <option value="10:00">10:00</option>
+										  <option value="11:00">11:00</option>
+										  <option value="12:00">12:00</option>
+										  <option value="13:00">13:00</option>
+										  <option value="14:00">14:00</option>
+										  <option value="15:00">15:00</option>
+										  <option value="16:00">16:00</option>
+										  <option value="17:00">17:00</option>
+										  <option value="18:00">18:00</option>
+										  <option value="19:00">19:00</option>
+										  <option value="20:00">20:00</option>
+										  <option value="21:00">21:00</option>
+										  <option value="22:00">22:00</option>
+										  <option value="23:00">23:00</option>
+										  <option value="24:00">24:00</option>
+										 </select>
+										</div>
 		    		
 
 		   					<script id="editor" type="text/plain" style="width:100%;">
@@ -218,6 +313,7 @@ var _hmt = _hmt || [];
 									det_http = new ActiveXObject("Microsoft.XMLHTTP");
 								}
 								det_http.open("POST","http://www.buaaclubs.com/api/clubs/articles/detail/" + article_id.toString() +"/change",true);
+								//det_http.open("POST","http://www.buaaclubs.com/api/clubs/articles/detail/" + article_id.toString() ,true);
 
 								det_http.setRequestHeader("token",sessionStorage.token);
         						det_http.setRequestHeader("uid",sessionStorage.uid);
@@ -227,10 +323,21 @@ var _hmt = _hmt || [];
 									if (det_http.readyState == 4)
 										if (det_http.status == 200)
 										{
+
 											var data = det_http.response;
 											var dataObj = eval("(" + data + ")");
-											document.getElementById("btitle").innerHTML = dataObj.article_title;
+											document.getElementById("atitle").value = dataObj.title;
 											sessionStorage.allContent = dataObj.content;
+											if(dataObj.type == 0){
+												sessionStorage.kind =0;
+												//document.getElementById("deadline").style.display = "inline-block";
+												document.getElementById("deadline").style.display = "none";
+
+											}
+											else{
+												sessionStorage.kind =1;
+												//document.getElementById("deadline").style.display = "none";
+											}
 										}
 										else
 										{

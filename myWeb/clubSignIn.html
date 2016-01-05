@@ -32,7 +32,8 @@
   		var md5_pwd = hex_md5(pwd);
   		club_http.open("POST","http://www.buaaclubs.com/api/clubs/login",true);
   		club_http.setRequestHeader("content-type"," ");
-		club_http.send("uid=" + uid + "&passwd=" + md5_pwd);
+		//club_http.send("uid=" + uid + "&passwd=" + md5_pwd);
+		club_http.send("uid=" + uid + "&passwd=" + pwd);
 		club_http.onreadystatechange = function()
 		{
 			if (club_http.readyState == 4)
@@ -44,7 +45,7 @@
 					sessionStorage.setItem("name",dataObj.name);
 					sessionStorage.setItem("pic_head",dataObj.headurl);
 					sessionStorage.setItem("clubsigned","true");
-					window.location.href = "http://www.buaaclubs.com/myWeb/new_clubDefault.html";
+					window.location.href = "http://www.buaaclubs.com/myWeb/new_clubDefault1.html";
 				}
 				else
 				{

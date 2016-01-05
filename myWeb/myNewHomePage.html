@@ -78,22 +78,9 @@
   			alert("两次输入的密码不一致！");
   			return;
   		}
-  		register_http.open("GET","http://www.buaaclubs.com/api/register/check" + number,true);
-  		register_http.send();
-  		register_http.onreadystatechange = function()
-		{
-			if (register_http.readyState == 4)
-				if (register_http.status == 404)
-				{
-					alert("该用户已经注册!");
-					return;
-				}
-		}
   		register_http.open("POST","http://www.buaaclubs.com/api/register",true);
   		register_http.setRequestHeader("content-type"," ");
 		register_http.send("name=" + name + "&uid=" + number + "&passwd=" + hex_md5(pwd) + "&phone_num=" + tel +"&email=" + email);	
-		data = xmlhttp.response;
-		user_head = eval("(" + data + ")");
 		register_http.onreadystatechange = function()
 		{
 			if (register_http.readyState == 4)
@@ -132,22 +119,7 @@
 				else
 				{
 					alert("用户名和密码不匹配或者用户名不存在");
-					return;
 				}
-		}
-		sign_http.open("get","http://www.buaaclubs.com/api/users/statistics",true);
-		sign_http.send();
-		sign_http.onreadystatechange = function()
-		{
-			if (sign_http.readyState == 4)
-				if (sign_http.status = 200)
-				{
-					var data_got = eval("(" + sign_http.response + ")");
-					var club_num = data_got.club_num;
-					var activity_num = data_got.activity_num;
-				}
-				else
-					return;
 		}
   	}
   	function signUp(obj)

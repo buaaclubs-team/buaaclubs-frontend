@@ -18,8 +18,15 @@
   <script type="text/javascript">
   function activityDelete(){
 		var aid = sessionStorage["click_id"];
-		//alert(aid);
-		//xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/"+sessionStorage.uid+"/articles/detail/:art_id_club/delete");
+		var xml_http;
+		if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+			xml_http = new XMLHttpRequest();
+		}
+		else
+		{// code for IE6, IE5
+			xml_http = new ActiveXObject("Microsoft.XMLHTTP");
+		}
 		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/articles/detail/"+aid+"/delete");
 		xmlhttp.setRequestHeader("UID",sessionStorage.uid);
 		xmlhttp.setRequestHeader("token",sessionStorage.token);
@@ -51,10 +58,6 @@
 	  function clubDefault(){
   	window.location.href = "new_clubDefault.html";
   }
-
-  </script>
-
-<script>
 var _hmt = _hmt || [];
 (function() {
   var hm = document.createElement("script");
@@ -62,11 +65,37 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-function check(){
-  		if(sessionStorage.clubsigned==undefined)
-  			window.location.href = "clubSignIn.html";
+	function check(){
+  		/*if(sessionStorage.clubsigned==undefined)
+  			window.location.href = "clubSignIn.html";*/
   	}
-</script>
+  	function add_reply()
+  	{
+  		var xmlhttp;
+		if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlhttp = new XMLHttpRequest();
+		}
+		else
+		{// code for IE6, IE5
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+  		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/articles/" + sessionStorage["click_id"] + "/comments/reply/-1");
+		xmlhttp.setRequestHeader("UID",sessionStorage.uid);
+		xmlhttp.setRequestHeader("token",sessionStorage.token);
+		var json = "{\"content\":";
+		json += '"' + document.getElementById("club_reply").value + '"' + "}";
+		xmlhttp.send(json);
+		xmlhttp.onreadystatechange = function()
+		{
+			//if (xmlhttp.readyState == 4)
+				if (xmlhttp.status == 200)
+					alert("发送成功");
+				else
+					alert("发送失败");
+		}
+  	}
+  </script>
 
 
 </head>
@@ -141,12 +170,6 @@ function check(){
 								<div class="ui teal labeled icon button" onclick="clubDefault()" style="background-color:#009d95;"> 活 动 详 情
 								 	<i class="content icon"></i>
 								</div>
-								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">查 看 历 史 消 息
-									<i class="mail outline icon"></i>
-								</div>
-								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">社 员 管 理
-									<i class="users icon"></i>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -196,8 +219,40 @@ function check(){
 										<i class="table icon"></i>
 									</div>
 								</div>
+							<p></p>
 
+							<div class="extra content" 
+								<div class="ui minimal comments">
+									<h3 class="ui small dividing header"> Comments </h3>
+									  <div id = "comment">
+										  <div class="comment">
+										    <a class="avatar">
+										      <img src="images/Ali.jpeg">
+										    </a>
+										    <div class="content">
+										      <a class="author">Matt</a>
+										      <a class = "user_id">13061209</a>
+										      <div class="metadata">
+										        <span class="date">今天下午 5:42</span>
+										      </div>
+										      <div class="text"> 啦啦啦啦啦啦啦啦~ 这个活动太赞了！！ </div>
+										      <div class="actions">
+									             <a class="reply" style="font-size: 1.3em">Reply</a>
+									          </div>
+										    </div>
+										  </div>
+									 </div>
+									 <form class="ui reply form">
+									 	<div class="field">
+									 		<textarea id = "club_reply"></textarea>
+									 	</div>
+									 	<div>
+									 		<div class="ui mini blue labeled submit icon button" onclick = "add_reply()"><i class="icon edit"></i> Add Reply </div>
+									 	</div>
+									 </form>
+								</div>
 							</div>
+
 						</div>
 
 						
@@ -228,6 +283,7 @@ function check(){
 		</div>
 	</div>
 	<script type = "text/javascript">
+		var num;
 		var article_id = sessionStorage["click_id"];
 	  	if (window.XMLHttpRequest)
 		{// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -237,7 +293,7 @@ function check(){
 		{// code for IE6, IE5
 			det_http = new ActiveXObject("Microsoft.XMLHTTP");
 		}
-		det_http.open("GET","http://www.buaaclubs.com/api/articles/detail/" + article_id.toString(),true);
+		det_http.open("GET","http://www.buaaclubs.com/api/articles/detail/" + article_id,true);
 		det_http.send();
 		det_http.onreadystatechange = function()
 		{
@@ -251,7 +307,40 @@ function check(){
 				}
 				else
 				{
-					alert("error");
+					alert("获取文章内容失败");
+				}
+		}
+
+		var ele = document.getElementById("comment").getElementsByTagName("DIV")[0].cloneNode(true);
+		var fa = document.getElementById("comment");
+		document.getElementById("comment").innerHTML = "";
+		det_http.open("GET","http://www.buaaclubs.com/api/articles/" + article_id + "/comments");
+		det_http.send();
+		
+		det_http.onreadystatechange = function()
+		{
+			if (det_http.readyState == 4)
+				if (det_http.status == 200)
+				{
+					var data = det_http.response;
+					var dataObj = eval("(" + data + ")");
+					num = dataObj.txt.length;
+					var i;
+					for (i = 0; i < num; i++)
+					{
+						new_ele = ele.cloneNode(true);
+						new_ele.getElementsByTagName("DIV")[0].getElementsByTagName("A")[0].innerHTML = dataObj.txt[i].name;
+						new_ele.getElementsByTagName("DIV")[0].getElementsByTagName("A")[1].innerHTML = dataObj.txt[i].uid;
+						new_ele.getElementsByTagName("DIV")[0].getElementsByTagName("DIV")[0].getElementsByTagName("SPAN")[0].innerHTML = dataObj.txt[i].time;
+						new_ele.getElementsByTagName("DIV")[0].getElementsByTagName("DIV")[1].innerHTML = dataObj.txt[i].content;
+						new_ele.dataset.comment_id = dataObj.txt[i].comment_id;
+						new_ele.getElementsByTagName("A")[0].getElementsByTagName("IMG")[0].src = dataObj.txt[i].user_head;
+						fa.insertBefore(new_ele,fa.lastChild);
+					}	
+				}
+				else
+				{
+					alert("获取评论失败");
 				}
 		}
 	</script>

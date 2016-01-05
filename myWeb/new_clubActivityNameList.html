@@ -51,12 +51,15 @@
   	
     function clubDefault()
     {
-  		window.location.href = "new_clubDefault.html";
+  		window.location.href = "new_clubDefault1.html";
   	}
 	function ActivityCreate()
 	{
 	  	window.location.href = "new_clubActivityCreate.html";
 	}
+	function userAdmin(){
+  		window.location.href = "new_clubUsersAdmin.html";
+  }
 	function sendMes()
 	{
 		$("#sendMesTable").modal('show');
@@ -308,13 +311,13 @@ var _hmt = _hmt || [];
 								<div class="ui teal labeled icon button" onclick="ActivityCreate()">创 建 活 动
 									<i class="add circle icon"></i>
 								</div>								
-								<div class="ui teal labeled icon button" onclick="clubDefault()" style="background-color:#009d95;"> 活 动 名 单
+								<div class="ui teal labeled icon button"  style="background-color:#009d95;"> 活 动 名 单
 								 	<i class="table icon"></i>
 								</div>
-								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">查 看 历 史 消 息
+								<div class="ui teal labeled icon button"  onclick="search()">查 看 历 史 消 息
 									<i class="mail outline icon"></i>
 								</div>
-								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">社 员 管 理
+								<div class="ui teal labeled icon button"  onclick="userAdmin()">社 员 管 理
 									<i class="users icon"></i>
 								</div>
 							</div>

@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Standard Meta -->
+  <meta charset="utf-8" />
+  <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">-->
+
+  <!-- Site Properities -->
+  <title>clubDefault</title>
+
+  <!--<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">-->
+
+  <link rel="stylesheet" type="text/css" href="../dist/semantic.css" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+  <script src="../dist/semantic.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="clubDefault.css" />
+  <script>
+  	sessionStorage.art_id_club = "";
+  	var cnt = -1;
+  	var xmlhttp;
+  	var data;
+  	var dataObj;
+  	var page = 0;
+  	var ele;
+  	var kind;
+  	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+  </script>
+  <script>
+  	function getActivity()
+  	{
+  		var fa = document.getElementById("news").getElementsByTagName("DIV")[2];
+  		fa.getElementsByTagName("A")[0].className="item";
+  		fa.getElementsByTagName("A")[1].className="active item";
+  		fa.getElementsByTagName("A")[2].className="item";
+  		kind = 0;
+  		show();
+  	}
+  	function getNews()
+  	{
+  		var fa = document.getElementById("news").getElementsByTagName("DIV")[2];
+  		fa.getElementsByTagName("A")[0].className="item";
+  		fa.getElementsByTagName("A")[1].className="item";
+  		fa.getElementsByTagName("A")[2].className="active item";
+  		kind = 1;
+  		show();
+  	}
+  	function getAll()
+  	{
+  		var fa = document.getElementById("news").getElementsByTagName("DIV")[2];
+  		fa.getElementsByTagName("A")[0].className="active item";
+  		fa.getElementsByTagName("A")[1].className="item";
+  		fa.getElementsByTagName("A")[2].className="item";
+  		kind = 2;
+  		show();
+  	}
+	function show()
+	{
+		//信息显示框的模板存在了ele当中
+		page++;
+		for (var i = 0; i < 5; i++)
+		{
+			xmlhttp.open("GET","http://www.buaaclubs.com/api/articles/page_id/" + page.toString() + "/" + sessionStorage.uid + "/" + kind.toString,true);
+			xmlhttp.send();
+			page++;
+			xmlhttp.onreadystatechange = function()
+			{
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+				{
+					data = xmlhttp.response;
+					dataObj = eval("(" + data + ")");
+					cnt++;
+					var new_ele = ele.cloneNode(true);
+					var ele1 = new_ele.getElementByTagName("DIV")[0].getElementByTagName("DIV")[0].getElementByTagName("SPAN")[0];
+					ele1.dataset.art_id_club = dataObj.article_id.toString();
+					var fa = new_ele.parentNode();
+					ele1.innerHTML = dataObj.article_abstract;
+					fa.insertBefore(new_ele,document.getElementById("next"));
+				}
+			}
+			
+		}
+	}
+	function activityDelete(obj){
+		var aid = obj.dataset.art_id_club;
+		//alert(aid);
+		//xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/"+sessionStorage.uid+"/articles/detail/:art_id_club/delete");
+		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/articles/detail/"+aid+"/delete");
+		//xmlhttp.setRequestHeader("UID",sessionStorage.uid);
+		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
+		xmlhttp.setRequestHeader("token",sessionStorage.token);
+		//xmlhttp.setRequestHeader("Content-Type"," ");
+		xmlhttp.send();
+		xmlhttp.onreadystatechange = function()
+		{
+			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
+				sessionStorage.removeItem("art_id_club");
+				location.reload();
+		}
+	}
+	function activityEdit(obj){
+		sessionStorage.setItem("click_id",obj.dataset.art_id_club);
+		window.location.href = "new_clubActivityEdit.html";
+	}
+	function ActivityCreate(){
+		window.location.href = "new_clubActivityCreate.html";
+	}
+	function activityList(obj){
+		sessionStorage.setItem("click_id",obj.dataset.art_id_club);
+		window.location.href = "new_clubActivityNameList.html";
+	}
+	
+	function showDet(obj)
+	{
+  		sessionStorage.setItem("click_id",obj.dataset.art_id_club);
+		window.location.href = "new_clubActivityDetails.html";
+	}
+	  function clubDefault(){
+  	window.location.href = "new_clubDefault.html";
+  }
+    function search()
+    {
+    	alert("该功能还在开发中");
+    }
+    function replacePicAndName(){
+  	var oldPic = document.getElementById('middle').getElementsByTagName('img')[0];
+  	var Pic = document.createElement('img');
+  	Pic.setAttribute('src',sessionStorage.pic_head);
+  	oldPic.parentNode.replaceChild(Pic,oldPic);
+  	var oldName = document.getElementById('logContainer').getElementsByTagName('a')[0];
+  	oldName.innerHTML = sessionStorage.name;
+  	var num=document.getElementById('middle').getElementsByTagName('img');
+  	for (var i = 1; i <num.length; i++) {
+  		var oldPic = document.getElementById('middle').getElementsByTagName('img')[i];
+  		var Pic = document.createElement('img');
+  		Pic.setAttribute('src',sessionStorage.pic_head);
+  		Pic.setAttribute('class',"ui avatar image");
+  		Pic.setAttribute('style',"margin-left: 15px; margin-top: 10px;");
+  		oldPic.parentNode.replaceChild(Pic,oldPic);
+  		};
+  		//<img class="ui avatar image" src="images/lingfeng.jpg"  style="margin-left: 15px; margin-top: 10px;"/>
+  }
+  	function check(){
+  		/*if(sessionStorage.clubsigned==undefined)
+  			window.location.href = "clubSignIn.html";*/
+  	}
+  </script>
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?3666c9cf75dbb1c2a355491d82b6fe81";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+
+<body style="font-size: 14px;">
+ <script type="text/javascript">check();</script>
+	<div>
+		<div id="gy_masthead">
+				<p id="name" style = "margin-top:10px;">BuaaClubs</p>
+				<div class="ui action left icon input" style="margin-top: 8px; margin-left: 850px; position: fixed;">
+					<i class="search icon"></i>
+					<input type="text" placeholder="Search~~~" />
+					<div class="ui inverted yellow button" onclick = "search()">Search</div>
+				</div>
+		</div>
+		<div id="middle">
+			<div class="blank"></div>
+			<div id="container">
+
+				<div id="logContainer">
+					<div class="cardContainer">
+						<div class="ui yellow card">
+							<div class="image" style="padding 10px;">
+								<img src="images/lingfeng.jpg">
+							</div>
+							<div class="content">
+								<a class="header"> 凌 峰 社 </a>
+								<div class="meta">
+									<span class="date">2005年成立</span>
+								</div>
+							</div>
+							<div class="extra content">
+								<a><i class="sun icon"></i> 实践类社团 </a>
+							</div>
+							<div class="extra content">
+								<a><i class="user icon"></i> 50 members </a>
+							</div>
+						</div>
+					</div>
+
+					<div class="buttonContainer" style="margin-top: 15px;">
+						<div class="buttonContainer">
+							<div class="ui vertical labeled icon buttons" style="width: 100%;">
+								<div class="ui teal labeled icon button" style="background-color:#009d95;" onclick="clubDefault()"> 后 台 首 页
+								 	<i class="paw icon"></i>
+								</div>
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">创 建 活 动
+									<i class="add circle icon"></i>
+								<div class="ui teal labeled icon button"  onclick="NewsCreate()">创 建 资 讯
+									<i class="add circle icon"></i>
+								</div>
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">查 看 历 史 消 息
+									<i class="mail outline icon"></i>
+								</div>
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">社 员 管 理
+									<i class="users icon"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>	
+
+				<div id="news">
+					<div class="newsContainer">
+						<div class="ui raised segment">
+							<div class="ui secondary pointing teal menu">
+							  <a class="active item" onclick = "getAll()">全部 </a>
+							  <a class="item" onclick = "getActivity()">活动 </a>
+							  <a class="item" onclick = "getNews()">资讯 </a>
+							</div>
+							<div class="ui segment">
+								<a class="ui link card" style="width: 100%;" id = "model">
+									<div class="content">
+										<div class="header">
+											<img class="ui avatar image" src="images/lingfeng.jpg"  style="margin-left: 15px; margin-top: 10px;"/>
+											<span style="margin-top:20px; margin-left: 10px;" onClick = "showDet(this)"></span>
+										</div>
+										<div class="meta" style="margin-top:6px; margin-left: 10px;">
+											<span  style="margin-top:20px; margin-left: 10px;"> </span>
+										</div>
+										<div class="description">
+											<p id = "abstract0"></p>
+										</div>
+									</div>
+
+									<div class="extra content">
+
+										<div class="mini ui animated grey button" tabindex="0" style="float: right" onClick="activityDelete(this)">
+											<div class="visible content" > 删 除 </div>
+											<div class="hidden content" >
+												<i class="remove circle icon" ></i>
+											</div>
+										</div>
+
+										<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityEdit(this)">
+											<div class="visible content" > 编 辑 </div>
+											<div class="hidden content">
+												<i class="edit icon"></i>
+											</div>
+										</div>
+
+										<div class="mini ui animated blue button" tabindex="0" style="float: right" onClick="activityList(this)">
+											<div class="visible content" > 名 单 </div>
+											<div class="hidden content" >
+												<i class="table icon"></i>
+											</div>
+										</div>
+
+									</div>
+								</a>					
+								<button class="tiny ui grey button" onClick = "show()" id = "next" style="width: 100%;"> 加 载 更 多 </button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div id="foot">
+				<div class="footFont" style="margin-left:250px; margin-top:10px;">
+					<div style="margin-top:10px; display:inline-block;"> 
+						<p style="color: white; font-size: 1.3em;">About us</p> 
+						<p><i class="qq icon"></i>QQ: 576156848</p>
+						<p><i class="mail icon"></i>Email: buaaclubs@163.com</p>
+					</div>
+					<div style="margin-top:10px; margin-left: 200px; display:inline-block;"> 
+						<p style="color: white; font-size: 1.3em;">Friendly Link</p> 
+						<p>XueBa<a href="http://115.28.39.28/"> http://115.28.39.28/</a></p>
+						<p>Phylab<a href="http://121.42.204.94/"> http://121.42.204.94/</a></p>
+					</div>
+
+					<div style="margin-top:10px; margin-left: 250px; display:inline-block;"> 
+						<p style="color: #e0e0e0; font-size: 2.7em; font-family: cursive;">BuaaClubs</p>
+					</div>
+				</div>
+			</div>
+
+	</div>
+    <script>
+    	
+    	replacePicAndName();
+		getAll();			
+	</script>
+
+
+	
+</body>
+
+</html>

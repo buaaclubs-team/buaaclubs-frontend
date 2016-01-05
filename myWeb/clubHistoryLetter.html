@@ -57,98 +57,15 @@
 	{
 	  	window.location.href = "new_clubActivityCreate.html";
 	}
-	function sendMes()
-	{
-		$("#sendMesTable").modal('show');
-	}
-	function sendEma()
-	{
-		$("#sendEmailTable").modal('show');
-	}
-	function sendLet()
-	{
-		$("#sendLetterTable").modal('show');
-	}
-	function cancelMes(){
-		$("#sendMesTable").modal('hide');
-	}
-	function cancelEma(){
-		$("#sendEmailTable").modal('hide');
-	}
-	function SendEmail()
-  	{
-  		var xmlhttp;
-  		if (window.XMLHttpRequest)
-        {// code for IE7+, Firefox, Chrome, Opera, Safari
-         xmlhttp=new XMLHttpRequest();
-         }
-       else
-       {// code for IE6, IE5
-      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  		}
-  		var max = document.getElementsByTagName("input").length-1;
-  		var jsonObj = "{\"uids\":[";
-  		for(var n = 1;n <=max ; n++)
-  		{
-  			if(document.getElementsByTagName("input")[n].checked==true)
-  				jsonObj +=+document.getElementsByTagName("input")[n].dataset.uid.toString()+",";
-  		}
-  		jsonObj = jsonObj.substring(jsonObj.length-1,0);
-  		jsonObj +="],\"content\":\""+document.getElementById("EmailContent").value+"\",\"article_id\":"+sessionStorage["click_id"]+"}";
-
-  		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/sendemail",true);
-  			//articles/detail/"+sessionStorage["click_id"].toString()+"/list/delete",true);
-  		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
-		xmlhttp.setRequestHeader("token",sessionStorage.token);
-		xmlhttp.send(jsonObj);
-		xmlhttp.onreadystatechange = function()
-		{
-			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
-				location.reload();
-		}
-
-  	}
-  	function SendMessage()
-  	{
-  		var xmlhttp;
-  		if (window.XMLHttpRequest)
-        {// code for IE7+, Firefox, Chrome, Opera, Safari
-         xmlhttp=new XMLHttpRequest();
-         }
-       else
-       {// code for IE6, IE5
-      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  		}
-  		var max = document.getElementsByTagName("input").length-1;
-  		var jsonObj = "{\"uids\":[";
-  		for(var n = 1;n <=max ; n++)
-  		{
-  			if(document.getElementsByTagName("input")[n].checked==true)
-  				jsonObj +=+document.getElementsByTagName("input")[n].dataset.uid.toString()+",";
-  		}
-  		jsonObj = jsonObj.substring(jsonObj.length-1,0);
-  		jsonObj +="],\"content\":\""+document.getElementById("MessageContent").value+"\",\"article_id\":"+sessionStorage["click_id"]+"}";
-
-  		xmlhttp.open("POST","http://www.buaaclubs.com/api/clubs/sendmessage",true);
-  			//articles/detail/"+sessionStorage["click_id"].toString()+"/list/delete",true);
-  		xmlhttp.setRequestHeader("uid",sessionStorage.uid);
-		xmlhttp.setRequestHeader("token",sessionStorage.token);
-		xmlhttp.send(jsonObj);
-		xmlhttp.onreadystatechange = function()
-		{
-			if(xmlhttp.readyState ==4 && xmlhttp.status ==200)
-				location.reload();
-		}
-
-  	}
+	
 	function search()
 	{
 		alert("该功能还在开发中");
 	}
-	// function check(){
- //  		if(sessionStorage.clubsigned==undefined)
- //  			window.location.href = "clubSignIn.html";
- //  	}
+	function check(){
+  		if(sessionStorage.clubsigned==undefined)
+  			window.location.href = "clubSignIn.html";
+  	}
   	function replacePicAndName(){
   	var oldPic = document.getElementById('middle').getElementsByTagName('img')[0];
   	var Pic = document.createElement('img');
@@ -157,10 +74,10 @@
   	var oldName = document.getElementById('logContainer').getElementsByTagName('a')[0];
   	oldName.innerHTML = sessionStorage.name;
   }
-  	// function check(){
-  	// 	if(sessionStorage.clubsigned==undefined)
-  	// 		window.location.href = "clubSignIn.html";
-  	// }
+  	function check(){
+  		if(sessionStorage.clubsigned==undefined)
+  			window.location.href = "clubSignIn.html";
+  	}
 </script>
 
 <script>
@@ -186,79 +103,7 @@ $(document).ready(function(){
 
 <body>
 	<script type="text/javascript">check();</script>
-	<div class="small ui modal" id="sendMesTable">
-		<i class="close icon"></i>
-		<div class="header">
-			通 知
-		</div>
-		<div class="content">
-			<div class="ui right labeled left icon input">
-  				<i class="mail icon"></i>
-  				<input type="text" placeholder="请输入你的通知~" style="width: 550px;" id = "MessageContent">
-  				<a class="ui blue tag label"> 短信内容 </a>
-			</div>
-		</div>
-
-		<div class="actions">
-			<div class="ui positive labeled icon button" onclick="SendMessage()">
-				发 送
-				<i class="mail icon"></i>
-			</div>
-			<div class="ui right black button" onclick="cancelMes()">
-				取 消
-			</div>
-		</div>
-	</div>
-
-	<div class="small ui modal" id="sendEmailTable">
-		<i class="close icon"></i>
-		<div class="header">
-			Email
-		</div>
-		<div class="content">
-			<div class="ui right labeled left icon input">
-  				<i class="mail icon"></i>
-  				<input type="text" placeholder="请输入你的通知~" style="width: 550px;" id = "EmailContent">
-  				<a class="ui blue tag label"> Email内容 </a>
-			</div>
-		</div>
-
-		<div class="actions">
-			<div class="ui positive labeled icon button" onclick="SendEmail()">
-				发 送
-				<i class="mail icon"></i>
-			</div>
-			<div class="ui right black button" onclick="cancelEma()">
-				取 消
-			</div>
-		</div>
-	</div>
-
-	<div class="small ui modal" id="sendLetterTable">
-		<i class="close icon"></i>
-		<div class="header">
-			站 内 信
-		</div>
-		<div class="content">
-			<div class="ui right labeled left icon input">
-  				<i class="mail icon"></i>
-  				<input type="text" placeholder="请输入你的通知~" style="width: 550px;" id = "EmailContent">
-  				<a class="ui blue tag label"> 站内信内容 </a>
-			</div>
-		</div>
-
-		<div class="actions">
-			<div class="ui positive labeled icon button" onclick="SendEmail()">
-				发 送
-				<i class="mail icon"></i>
-			</div>
-			<div class="ui right black button" onclick="cancelEma()">
-				取 消
-			</div>
-		</div>
-	</div>
-
-
+	
 	<div>
 		<div id="gy_masthead">
 				<p id="name" style = "margin-top:10px;">BuaaClubs</p>
@@ -321,8 +166,11 @@ $(document).ready(function(){
 								 	<i class="table icon"></i>
 								</div>
 
-								<div class="ui teal labeled icon button" onclick="clubDefault()" style="background-color:#009d95;"> 历 史 站 内 信
-								 	<i class="table icon"></i>
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()" style="background-color:#009d95;">查 看 历 史 消 息
+									<i class="mail outline icon"></i>
+								</div>
+								<div class="ui teal labeled icon button"  onclick="ActivityCreate()">社 员 管 理
+									<i class="users icon"></i>
 								</div>
 							</div>
 						</div>
@@ -332,27 +180,14 @@ $(document).ready(function(){
 				<div id="news">
 					<div class="newsContainer">
 
-						<button class="ui small blue button" style="margin-left: 550px;">删除</button>
-
-						<div class="ui styled accordion" style="width: 700px; margin-top: 20px;">
-						  <div class="title">
-						  	<i class="dropdown icon"></i>
-						  			<div class="ui feed" style="display:inline-block;">
-							  			<div class="event">
-							  				<div class="label"><img src="images/Ali.jpeg"/></div>
-							  				<div class="content">
-							  					<div class="summary">
-							  						<a class="user"> 凌峰社</a> 发出了一条通知 <div class="date"> 1小时前 </div>
-							  					</div>
-							  				</div>
-							  				<div class="ui checkbox" style="margin-left:320px;"><input type="checkbox"><label> </label></div>
-							  			</div>
-						  			</div>
-						  </div>
-						  <div class="content">
-						    <p>明天十点集合哦~~</p>
-						  </div>
-
+						<div class="ui pointing teal menu">
+						  <a class="active item">全 部</a>
+						  <a class="item">站 内 信</a>
+						  <a class="item">短 信</a>
+						  <a class="item">Email</a>
+						</div>
+						<div class="ui segment">
+						  <div class="ui styled accordion" style="width: 700px; margin-top: 20px;">
 						  <div class="title">
 						  	<i class="dropdown icon"></i>
 						  			<div class="ui feed" style="display:inline-block;">
@@ -391,6 +226,7 @@ $(document).ready(function(){
 						</div>
 					</div>
 				</div>
+			</div>
 		</div>
 	</div>
 		<div id="foot">
